@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Office Warrior 30d</title>
+    <style>
+        :root {
+            --primary: #6366f1;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #1e293b;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .app-container {
+            max-width: 500px;
+            width: 100%;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: var(--card);
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .day-badge {
+            background: var(--primary);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            text-align: left;
+            margin: 20px 0;
+        }
+
+        li {
+            padding: 10px 0;
+            border-bottom: 1px solid #f1f5f9;
+            display: flex;
+            align-items: center;
+        }
+
+        li::before {
+            content: "⚡";
+            margin-right: 10px;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            gap: 10px;
+        }
+
+        button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            flex: 1;
+            font-weight: bold;
+            transition: opacity 0.2s;
+        }
+
+        button:disabled {
+            background: #cbd5e1;
+        }
+
+        .pro-tip {
+            margin-top: 20px;
+            font-size: 0.9em;
+            font-style: italic;
+            color: #64748b;
+            border-top: 1px dashed #cbd5e1;
+            padding-top: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <header>
+        <h1>Warrior 30D 🧘‍♂️</h1>
+        <p>Tu espalda te lo agradecerá.</p>
+    </header>
+
+    <div class="card" id="workout-card">
+        <div id="day-label" class="day-badge">Día 1</div>
+        <h2 id="day-title">Cargando energía...</h2>
+        <ul id="exercise-list">
+            </ul>
+        <p class="pro-tip" id="pro-tip"></p>
+
+        <div class="controls">
+            <button id="prevBtn" onclick="changeDay(-1)">Anterior</button>
+            <button id="nextBtn" onclick="changeDay(1)">Siguiente</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Datos de la aplicación
+    const plan = [
+        {
+            title: "Reactivación Postural",
+            exercises: ["10 Rotaciones de cuello", "15 Aperturas de pecho (Pared)", "Plancha abdominal 30s"],
+            tip: "Ajusta la altura de tu silla: tus pies deben tocar el suelo."
+        },
+        {
+            title: "Movilidad de Cadera",
+            exercises: ["10 Estocadas suaves", "Estiramiento de Psoas (30s)", "20 Sentadillas en silla"],
+            tip: "Si pasas mucho tiempo sentado, tu cadera se aprieta. ¡Muévela!"
+        },
+        {
+            title: "Fuerza en Escritorio",
+            exercises: ["12 Flexiones sobre escritorio", "15 Fondos de tríceps", "Plancha lateral 20s/lado"],
+            tip: "Aprovecha las llamadas de solo audio para caminar por la habitación."
+        }
+        // Puedes añadir aquí hasta el día 30 siguiendo este formato
+    ];
+
+    let currentDay = 0;
+
+    function updateUI() {
+        const data = plan[currentDay];
+        document.getElementById('day-label').innerText = `Día ${currentDay + 1}`;
+        document.getElementById('day-title').innerText = data.title;
+        document.getElementById('pro-tip').innerText = `💡 Tip: ${data.tip}`;
+        
+        const list = document.getElementById('exercise-list');
+        list.innerHTML = "";
+        data.exercises.forEach(ex => {
+            const li = document.createElement('li');
+            li.innerText = ex;
+            list.appendChild(li);
+        });
+
+        document.getElementById('prevBtn').disabled = currentDay === 0;
+        document.getElementById('nextBtn').disabled = currentDay === plan.length - 1;
+    }
+
+    function changeDay(delta) {
+        currentDay += delta;
+        updateUI();
+    }
+
+    // Inicializar
+    updateUI();
+</script>
+
+</body>
+</html>
