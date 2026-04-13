@@ -3,14 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Warrior 30D - Acceso Exclusivo</title>
-    <link rel="manifest" href="manifest.json">
+    <title>Warrior 30D</title>
     <style>
         :root { --primary: #6366f1; --bg: #f8fafc; --card: #ffffff; --text: #1e293b; }
         body { font-family: sans-serif; background-color: var(--bg); color: var(--text); display: flex; flex-direction: column; align-items: center; padding: 20px; min-height: 100vh; }
-        .app-container { max-width: 500px; width: 100%; display: none; } /* Oculto por defecto */
         
-        /* Estilos del Muro de Pago */
+        /* Muro de Acceso */
         #auth-screen { 
             max-width: 400px; width: 100%; text-align: center; margin-top: 50px; 
             background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.1);
@@ -18,14 +16,15 @@
         input { width: 80%; padding: 15px; margin: 20px 0; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 1.1em; text-align: center; }
         .btn-unlock { background: #10b981; color: white; border: none; padding: 15px 30px; border-radius: 12px; font-weight: bold; cursor: pointer; width: 85%; }
         
-        /* Estilos de la App (iguales a los anteriores) */
+        /* Contenedor de la App */
+        #app-content { display: none; max-width: 500px; width: 100%; }
         .card { background: var(--card); padding: 25px; border-radius: 20px; box-shadow: 0 10px 15px rgba(0,0,0,0.1); text-align: center; }
         .day-badge { background: var(--primary); color: white; padding: 5px 15px; border-radius: 20px; font-weight: bold; display: inline-block; margin-bottom: 10px; }
         ul { list-style: none; padding: 0; text-align: left; margin: 20px 0; }
-        li { padding: 10px 0; border-bottom: 1px solid #f1f5f9; }
-        .controls { display: flex; justify-content: space-between; gap: 10px; }
-        button { background: var(--primary); color: white; border: none; padding: 12px 20px; border-radius: 12px; cursor: pointer; flex: 1; font-weight: bold; }
-        button:disabled { background: #cbd5e1; }
+        li { padding: 12px 0; border-bottom: 1px solid #f1f5f9; }
+        .controls { display: flex; justify-content: space-between; gap: 10px; margin-top: 20px; }
+        .nav-btn { background: var(--primary); color: white; border: none; padding: 12px 20px; border-radius: 12px; cursor: pointer; flex: 1; font-weight: bold; }
+        .nav-btn:disabled { background: #cbd5e1; cursor: not-allowed; }
         .pro-tip { margin-top: 20px; font-size: 0.9em; font-style: italic; color: #64748b; border-top: 1px dashed #cbd5e1; padding-top: 15px; }
     </style>
 </head>
@@ -34,46 +33,37 @@
 <div id="auth-screen">
     <div style="font-size: 50px;">🔐</div>
     <h2>Acceso Warrior 30D</h2>
-    <p>Introduce tu clave de activación para desbloquear tu plan de entrenamiento.</p>
-    <input type="text" id="pass-input" placeholder="Tu clave aquí">
-    <button class="btn-unlock" onclick="checkPass()">Activar Plan</button>
-    <p style="font-size: 0.8em; color: #94a3b8; margin-top: 20px;">¿No tienes clave? <br> Cómprala en tu-tienda.com</p>
+    <p>Introduce tu clave de activación:</p>
+    <input type="text" id="pass-input" placeholder="Escribe la clave aquí">
+    <button class="btn-unlock" id="unlock-button">ACTIVAR PLAN</button>
 </div>
 
-<div class="app-container" id="app-content">
+<div id="app-content">
     <header style="text-align: center;">
         <h1>Warrior 30D 🧘‍♂️</h1>
     </header>
     <div class="card">
         <div id="day-label" class="day-badge">Día 1</div>
-        <h2 id="day-title">Cargando...</h2>
+        <h2 id="day-title"></h2>
         <ul id="exercise-list"></ul>
         <p class="pro-tip" id="pro-tip"></p>
         <div class="controls">
-            <button id="prevBtn">Anterior</button>
-            <button id="nextBtn">Siguiente</button>
+            <button class="nav-btn" id="prevBtn">Anterior</button>
+            <button class="nav-btn" id="nextBtn">Siguiente</button>
         </div>
     </div>
 </div>
 
 <script>
-    // 🔑 DEFINE TU CLAVE AQUÍ (Cámbiala por la que quieras)
-    const SECRET_KEY = "cwa1234"; 
+    const SECRET_KEY = "123456"; // <--- ESTA ES TU CLAVE
+    let currentDay = 0;
 
-    // Verificación inicial
-    if (localStorage.getItem('unlocked') === 'true') {
-        showApp();
-    }
-
-    function checkPass() {
-        const input = document.getElementById('pass-input').value;
-        if (input.toUpperCase() === SECRET_KEY) {
-            localStorage.setItem('unlocked', 'true');
-            showApp();
-        } else {
-            alert("Clave incorrecta. Revisa tu correo de confirmación.");
-        }
-    }
+    const plan = [
+        { title: "Despertar Postural", exercises: ["10 Rotaciones cuello", "15 Aperturas pecho", "Plancha 30s"], tip: "Monitor a la altura de los ojos." },
+        { title: "Adiós Silla", exercises: ["20 Sentadillas silla", "10 Estocadas", "Estiramiento Psoas"], tip: "Levántate cada 50 minutos." },
+        { title: "Espalda Fuerte", exercises: ["15 Supermans (suelo)", "10 Bird-Dog", "Plancha 40s"], tip: "No cruces las piernas al sentarte." }
+        // ... puedes seguir pegando aquí los días que faltan
+    ];
 
     function showApp() {
         document.getElementById('auth-screen').style.display = 'none';
@@ -81,21 +71,12 @@
         updateUI();
     }
 
-    const plan = [
-        { title: "Despertar Postural", exercises: ["10 Rotaciones cuello", "15 Aperturas pecho", "Plancha 30s"], tip: "Monitor a la altura de los ojos." },
-        { title: "Adiós Silla", exercises: ["20 Sentadillas silla", "10 Estocadas", "Estiramiento Psoas"], tip: "Levántate cada 50 minutos." },
-        // ... (AQUÍ COPIAS EL RESTO DE LOS 30 DÍAS QUE TE PASÉ ANTES)
-        { title: "¡Victoria!", exercises: ["30 min actividad favorita", "Celebración"], tip: "¡Eres un Guerrero!" }
-    ];
-
-    let currentDay = 0;
-
     function updateUI() {
         const data = plan[currentDay];
-        if(!data) return;
         document.getElementById('day-label').innerText = `Día ${currentDay + 1}`;
         document.getElementById('day-title').innerText = data.title;
         document.getElementById('pro-tip').innerText = `💡 Tip: ${data.tip}`;
+        
         const list = document.getElementById('exercise-list');
         list.innerHTML = "";
         data.exercises.forEach(ex => {
@@ -103,12 +84,37 @@
             li.innerText = `⚡ ${ex}`;
             list.appendChild(li);
         });
-        document.getElementById('prevBtn').disabled = currentDay === 0;
-        document.getElementById('nextBtn').disabled = currentDay === plan.length - 1;
+
+        document.getElementById('prevBtn').disabled = (currentDay === 0);
+        document.getElementById('nextBtn').disabled = (currentDay === plan.length - 1);
     }
 
-    document.getElementById('prevBtn').onclick = () => { if(currentDay > 0) { currentDay--; updateUI(); } };
-    document.getElementById('nextBtn').onclick = () => { if(currentDay < plan.length - 1) { currentDay++; updateUI(); } };
+    // Evento para el botón de desbloqueo
+    document.getElementById('unlock-button').addEventListener('click', function() {
+        const userPass = document.getElementById('pass-input').value.trim().toUpperCase();
+        if (userPass === SECRET_KEY) {
+            localStorage.setItem('warrior_unlocked', 'true');
+            showApp();
+        } else {
+            alert("Clave incorrecta. Inténtalo de nuevo.");
+        }
+    });
+
+    // Eventos de navegación
+    document.getElementById('prevBtn').addEventListener('click', () => {
+        if(currentDay > 0) { currentDay--; updateUI(); }
+    });
+
+    document.getElementById('nextBtn').addEventListener('click', () => {
+        if(currentDay < plan.length - 1) { currentDay++; updateUI(); }
+    });
+
+    // Revisar si ya estaba desbloqueado al cargar la página
+    window.onload = function() {
+        if (localStorage.getItem('warrior_unlocked') === 'true') {
+            showApp();
+        }
+    };
 </script>
 </body>
 </html>
