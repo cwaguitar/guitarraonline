@@ -9,47 +9,37 @@
         body { font-family: 'Segoe UI', system-ui, sans-serif; background-color: var(--bg); color: var(--text); display: flex; flex-direction: column; align-items: center; padding: 20px; min-height: 100vh; margin: 0; }
         
         /* Pantalla de Acceso */
-        #auth-screen { 
-            max-width: 450px; width: 100%; text-align: center; margin-top: 40px; 
-            background: var(--card); padding: 40px 25px; border-radius: 28px; border: 1px solid #334155;
-            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
-        }
-        .logo-circle { width: 90px; height: 90px; background: var(--primary); color: #000; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 28px; margin: 0 auto 25px; box-shadow: 0 0 30px rgba(251, 191, 36, 0.2); }
-        
-        h2 { font-size: 1.8em; margin-bottom: 5px; letter-spacing: -0.5px; color: white; }
-        .tagline { color: var(--primary); font-weight: bold; margin-bottom: 20px; text-transform: uppercase; font-size: 0.9em; letter-spacing: 1px; }
-        .manifesto { font-size: 0.95em; line-height: 1.6; color: #94a3b8; margin-bottom: 25px; font-style: italic; padding: 0 10px; border-left: 2px solid var(--primary); margin: 0 20px 25px 20px; }
-        
-        input { width: 85%; padding: 16px; margin-bottom: 15px; border: 2px solid #334155; background: #0f172a; color: white; border-radius: 14px; font-size: 1em; text-align: center; outline: none; }
-        input:focus { border-color: var(--primary); }
-        
-        .btn-unlock { background: var(--primary); color: #000; border: none; padding: 18px; border-radius: 14px; font-weight: 800; cursor: pointer; width: 92%; font-size: 1.1em; transition: all 0.2s; }
-        .btn-unlock:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(251, 191, 36, 0.3); }
+        #auth-screen { max-width: 450px; width: 100%; text-align: center; margin-top: 40px; background: var(--card); padding: 40px 25px; border-radius: 28px; border: 1px solid #334155; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); }
+        .logo-circle { width: 90px; height: 90px; background: var(--primary); color: #000; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 28px; margin: 0 auto 25px; }
+        .manifesto { font-size: 0.95em; line-height: 1.6; color: #94a3b8; margin-bottom: 25px; font-style: italic; border-left: 2px solid var(--primary); margin: 0 20px 25px 20px; padding-left: 15px; text-align: left; }
+        input { width: 85%; padding: 16px; margin-bottom: 15px; border: 2px solid #334155; background: #0f172a; color: white; border-radius: 14px; font-size: 1em; text-align: center; }
+        .btn-unlock { background: var(--primary); color: #000; border: none; padding: 18px; border-radius: 14px; font-weight: 800; cursor: pointer; width: 92%; font-size: 1.1em; }
 
-        /* Contenido de la App */
+        /* App Content */
         #app-content { display: none; max-width: 600px; width: 100%; animation: fadeIn 0.8s ease; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .progress-container { background: #334155; height: 10px; border-radius: 5px; overflow: hidden; margin-bottom: 20px; }
+        #progress-bar { background: var(--primary); height: 100%; width: 0%; transition: width 0.7s; }
 
-        .progress-wrapper { width: 100%; margin: 20px 0; }
-        .progress-container { background: #334155; height: 10px; border-radius: 5px; overflow: hidden; }
-        #progress-bar { background: var(--primary); height: 100%; width: 0%; transition: width 0.7s ease-in-out; }
-
-        .video-container { width: 100%; aspect-ratio: 16/9; background: #000; border-radius: 20px; margin-bottom: 25px; overflow: hidden; border: 1px solid #334155; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.3); }
+        .video-container { width: 100%; aspect-ratio: 16/9; background: #000; border-radius: 20px; margin-bottom: 25px; overflow: hidden; border: 1px solid #334155; }
         .video-container iframe { width: 100%; height: 100%; border: none; }
 
-        .card { background: var(--card); padding: 30px; border-radius: 28px; border: 1px solid #334155; position: relative; }
+        .card { background: var(--card); padding: 30px; border-radius: 28px; border: 1px solid #334155; }
         .lesson-tag { color: var(--primary); font-size: 0.85em; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; }
         
-        .task-list { list-style: none; padding: 0; margin: 25px 0; }
-        .task-item { padding: 16px; background: #0f172a; border-radius: 15px; margin-bottom: 12px; display: flex; align-items: center; border-left: 4px solid var(--primary); }
-        .task-item span { margin-left: 12px; font-weight: 500; }
+        /* Tareas Acordeón */
+        .task-list { margin: 25px 0; }
+        .task-item { background: #0f172a; border-radius: 15px; margin-bottom: 10px; overflow: hidden; border: 1px solid #334155; }
+        .task-header { padding: 15px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 600; }
+        .task-header::after { content: '▾'; color: var(--primary); }
+        .task-body { padding: 0 15px; max-height: 0; transition: all 0.3s ease-out; color: #94a3b8; font-size: 0.95em; line-height: 1.5; }
+        .task-item.open .task-body { padding: 15px; max-height: 200px; border-top: 1px solid #334155; }
+        .task-item.open .task-header::after { content: '▴'; }
 
         .controls { display: flex; justify-content: space-between; gap: 15px; margin-top: 30px; }
         .nav-btn { background: #334155; color: white; border: none; padding: 16px; border-radius: 16px; cursor: pointer; flex: 1; font-weight: 700; }
         .nav-btn.next { background: var(--primary); color: black; }
-        .nav-btn:disabled { opacity: 0.15; cursor: not-allowed; }
-
-        .quote-box { margin-top: 25px; padding-top: 20px; border-top: 1px solid #334155; color: #94a3b8; font-size: 0.95em; text-align: center; }
+        .nav-btn:disabled { opacity: 0.15; }
     </style>
 </head>
 <body>
@@ -57,114 +47,172 @@
 <div id="auth-screen">
     <div class="logo-circle">1%</div>
     <h2>Guitarra con Jose</h2>
-    <p class="tagline">Tu 1% Diario</p>
     <p class="manifesto">
-        "No te voy a enseñar a ser Jimi Hendrix en una semana. Te voy a enseñar a que no puedas pasar un solo día sin disfrutar de tu guitarra. Porque el secreto no es practicar mucho, sino no dejar de practicar nunca."
+        "No te voy a enseñar a ser Jimi Hendrix en una semana. Te voy a enseñar a que no puedas pasar un solo día sin disfrutar de tu guitarra..."
     </p>
     <input type="text" id="pass-input" placeholder="Tu Clave de Alumno">
     <button class="btn-unlock" id="unlock-button">EMPEZAR MI 1% CON JOSE</button>
 </div>
 
 <div id="app-content">
-    <div class="progress-wrapper">
-        <div style="display: flex; justify-content: space-between; font-size: 0.8em; margin-bottom: 8px; font-weight: bold;">
-            <span>META DIARIA ACUMULADA</span>
-            <span id="percent-text">0%</span>
-        </div>
-        <div class="progress-container"><div id="progress-bar"></div></div>
-    </div>
-    
+    <div class="progress-container"><div id="progress-bar"></div></div>
     <div class="video-container" id="media-box"></div>
-
     <div class="card">
         <span class="lesson-tag" id="day-label">CLASE 01 / 30</span>
         <h2 id="day-title" style="margin: 10px 0 25px 0; color: white;"></h2>
-        
         <div class="task-list" id="task-list"></div>
-
         <div class="controls">
             <button class="nav-btn" id="prevBtn">Anterior</button>
-            <button class="nav-btn next" id="nextBtn">Siguiente Nivel</button>
-        </div>
-        <div class="quote-box">
-            <span id="pro-quote"></span>
+            <button class="nav-btn next" id="nextBtn">Siguiente 1%</button>
         </div>
     </div>
 </div>
 
 <script>
-    const SECRET_KEY = "GUITARRA1"; // Clave para tus alumnos
+    const SECRET_KEY = "GUITARRA1";
     let currentDay = 0;
 
     const plan = [
-        { 
-            title: "Postura y Primer Rasgueo", 
-            video: "https://www.youtube.com/embed/dQw4w9WgXcQ", 
-            tasks: ["Espalda recta, hombros relajados", "Sujeción de púa (o pulgar)", "4 Rasgueos lentos hacia abajo"],
-            quote: "Hoy has ganado tu primer 1%. El camino empieza aquí con Jose."
-        },
-        { 
-            title: "La Araña: Agilidad de dedos", 
-            video: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-            tasks: ["Dedo 1 en traste 1", "Dedo 2 en traste 2", "No levantes los dedos de más"],
-            quote: "La velocidad es la hija de la precisión. No corras."
-        },
-        { 
-            title: "Tu primer acorde: Mi Menor (Em)", 
-            video: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-            tasks: ["Dedo 2 en traste 2, cuerda 5", "Dedo 3 en traste 2, cuerda 4", "Haz sonar todas las cuerdas"],
-            quote: "Un acorde hoy, una canción mañana. Sigue así."
-        }
-    ];
+        // SEMANA 1: FUNDAMENTOS Y MAYORES BÁSICOS
+        { title: "Postura y Primer Rasgueo", tasks: [
+            { h: "Posición del cuerpo", b: "Siéntate derecho, usa una silla sin brazos. La cintura de la guitarra descansa en tu pierna derecha." },
+            { h: "Tu primer rasgueo", b: "Mueve la muñeca hacia abajo suavemente sobre las cuerdas. Debe sonar como una caricia, no un golpe." }
+        ]},
+        { title: "Acorde de Mi Mayor (E)", tasks: [
+            { h: "Forma de E", b: "Dedo 1: Traste 1, Cuerda 3. Dedo 2: Traste 2, Cuerda 5. Dedo 3: Traste 2, Cuerda 4." },
+            { h: "Limpieza", b: "Toca cuerda por cuerda. Si alguna suena 'muerta', arquea más tus dedos." }
+        ]},
+        { title: "Acorde de La Mayor (A)", tasks: [
+            { h: "Forma de A", b: "Dedos 1, 2 y 3 todos en el traste 2, de las cuerdas 4, 3 y 2. ¡Están un poco apretados!" },
+            { h: "El bajo", b: "Rasca desde la 5ta cuerda hacia abajo. Evita la 6ta." }
+        ]},
+        { title: "Acorde de Re Mayor (D)", tasks: [
+            { h: "Forma de D", b: "Dedo 1: T2, C3. Dedo 2: T2, C1. Dedo 3: T3, C2. Parece un pequeño triángulo." },
+            { h: "Rasgueo", b: "Toca solo desde la 4ta cuerda (la más fina de las gruesas)." }
+        ]},
+        { title: "Cambios E - A - D", tasks: [
+            { h: "Transición lenta", b: "Cambia entre E y A sin detener el ritmo de tu mano derecha." }
+        ]},
+        { title: "Acorde de Sol Mayor (G)", tasks: [
+            { h: "Forma de G", b: "Dedo 1: T2, C5. Dedo 2: T3, C6. Dedo 3: T3, C1. ¡Abre bien la mano!" }
+        ]},
+        { title: "Acorde de Do Mayor (C)", tasks: [
+            { h: "Forma de C", b: "Dedo 1: T1, C2. Dedo 2: T2, C4. Dedo 3: T3, C5. Mantén los dedos en punta." }
+        ]},
 
-    function showApp() {
-        document.getElementById('auth-screen').style.display = 'none';
-        document.getElementById('app-content').style.display = 'block';
-        updateUI();
-    }
+        // SEMANA 2: MENORES BÁSICOS
+        { title: "La Magia del Menor (Am)", tasks: [
+            { h: "De La a La menor", b: "Es como Do Mayor pero bajando el dedo 3 al traste 2 de la cuerda 3. Suena triste y melancólico." }
+        ]},
+        { title: "Mi Menor (Em)", tasks: [
+            { h: "Forma de Em", b: "Es el más fácil. Solo dedos 2 y 3 en el traste 2 de las cuerdas 5 y 4. ¡Suena profundo!" }
+        ]},
+        { title: "Re Menor (Dm)", tasks: [
+            { h: "Forma de Dm", b: "Dedo 1: T1, C1. Dedo 2: T2, C3. Dedo 3: T3, C2. Mucho sentimiento." }
+        ]},
+        { title: "Balada en Menor", tasks: [
+            { h: "Ritmo 4/4", b: "Combina Am, Em y Dm. Un rasgueo hacia abajo por cada tiempo." }
+        ]},
+        { title: "Introducción a la Cejilla (F)", tasks: [
+            { h: "El reto del Fa", b: "Dedo 1 pisa todas las cuerdas en el T1. Es difícil, no te desesperes hoy." }
+        ]},
+        { title: "Si Menor (Bm)", tasks: [
+            { h: "Forma de Bm", b: "Cejilla en T2. El resto es como un Am pero movido dos trastes." }
+        ]},
+        { title: "Repaso Semanal", tasks: [
+            { h: "Círculo armónico", b: "Toca G - Em - C - D. Es la base de miles de canciones." }
+        ]},
+
+        // SEMANA 3: ACORDES DE SÉPTIMA (EL SONIDO BLUES/JAZZ)
+        { title: "Mi Séptima (E7)", tasks: [
+            { h: "Forma de E7", b: "Haz un Mi Mayor y quita el dedo 3. Ese espacio vacío le da el brillo de séptima." }
+        ]},
+        { title: "La Séptima (A7)", tasks: [
+            { h: "Forma de A7", b: "Haz un La Mayor y quita el dedo medio (el 2). Solo quedan dos dedos pisando." }
+        ]},
+        { title: "Re Séptima (D7)", tasks: [
+            { h: "Forma de D7", b: "Dedo 1: T1, C2. Dedo 2: T2, C3. Dedo 3: T2, C1. Es un triángulo invertido." }
+        ]},
+        { title: "Sol Séptima (G7)", tasks: [
+            { h: "Forma de G7", b: "Dedo 1: T1, C1. Dedo 2: T2, C5. Dedo 3: T3, C6. ¡Cuidado con no confundirlo con Sol Mayor!" }
+        ]},
+        { title: "Do Séptima (C7)", tasks: [
+            { h: "Forma de C7", b: "Haz un Do Mayor normal y añade el dedo 4 (el meñique) en el Traste 3, Cuerda 3." }
+        ]},
+        { title: "Blues en 12 compases", tasks: [
+            { h: "Ritmo Blues", b: "Usa E7, A7 y B7. Es el sonido más icónico de la guitarra eléctrica y acústica." }
+        ]},
+        { title: "Si Séptima (B7)", tasks: [
+            { h: "Forma de B7", b: "Dedo 1: T1, C4. Dedo 2: T2, C5. Dedo 3: T2, C3. Dedo 4: T2, C1. ¡Usa todos los dedos!" }
+        ]},
+
+        // SEMANA 4: CONSOLIDACIÓN Y CANCIONES
+        { title: "Menores Séptimos (Am7, Em7)", tasks: [
+            { h: "Formas suaves", b: "Quita dedos a tus acordes menores. El sonido se vuelve más aireado y moderno." }
+        ]},
+        { title: "Rasgueo Pop/Rock", tasks: [
+            { h: "Abajo, abajo, arriba, arriba", b: "El rasgueo universal. Practícalo con G y D." }
+        ]},
+        { title: "Rasgueo Vals/Ranchera", tasks: [
+            { h: "Ritmo 3/4", b: "Bajo (pulgar) y dos rasgueos hacia abajo. Ideal para canciones clásicas." }
+        ]},
+        { title: "Arpegios Básicos", tasks: [
+            { h: "P-i-m-a", b: "Toca las cuerdas una por una: Pulgar, índice, medio, anular. No corras." }
+        ]},
+        { title: "Lectura de Cifrado", tasks: [
+            { h: "A B C D E F G", b: "Aprende que A=La, B=Si, C=Do, D=Re, E=Mi, F=Fa, G=Sol. Es el idioma universal." }
+        ]},
+        { title: "Tu Primera Canción", tasks: [
+            { h: "Elegir tema", b: "Busca una canción que use solo G, C y D. ¡Hay miles!" }
+        ]},
+        { title: "Limpieza de sonido", tasks: [
+            { h: "Cero trasteos", b: "Toca todos tus acordes. Asegúrate de que no suenen ruidos metálicos." }
+        ]},
+        { title: "Afinación de oído", tasks: [
+            { h: "Método del 5to traste", b: "Aprende a afinar comparando cuerdas entre sí." }
+        ]},
+        { title: "¡Graduación!", tasks: [
+            { h: "Concierto privado", b: "Toca 3 canciones para alguien o para ti mismo. ¡Eres guitarrista!" }
+        ]}
+    ];
 
     function updateUI() {
         const data = plan[currentDay];
-        const progress = Math.round(((currentDay + 1) / 30) * 100); // Basado en meta de 30 días
-        
-        document.getElementById('day-label').innerText = `DÍA ${String(currentDay + 1).padStart(2, '0')} / 30`;
+        document.getElementById('day-label').innerText = `CLASE ${String(currentDay + 1).padStart(2, '0')} / 30`;
         document.getElementById('day-title').innerText = data.title;
-        document.getElementById('pro-quote').innerText = `"${data.quote}"`;
-        document.getElementById('percent-text').innerText = `${progress}%`;
-        document.getElementById('progress-bar').style.width = `${progress}%`;
-        
-        const mediaBox = document.getElementById('media-box');
-        mediaBox.innerHTML = data.video ? `<iframe src="${data.video}" allowfullscreen></iframe>` : `<p>Cargando técnica...</p>`;
+        document.getElementById('progress-bar').style.width = `${((currentDay + 1) / 30) * 100}%`;
         
         const list = document.getElementById('task-list');
         list.innerHTML = "";
         data.tasks.forEach(t => {
-            const li = document.createElement('div');
-            li.className = "task-item";
-            li.innerHTML = `✅ <span>${t}</span>`;
-            list.appendChild(li);
+            const item = document.createElement('div');
+            item.className = "task-item";
+            item.innerHTML = `<div class="task-header">${t.h}</div><div class="task-body">${t.b}</div>`;
+            item.onclick = () => item.classList.toggle('open');
+            list.appendChild(item);
         });
 
         document.getElementById('prevBtn').disabled = (currentDay === 0);
-        document.getElementById('nextBtn').innerText = (currentDay === plan.length - 1) ? "FINALIZAR HOY" : "SIGUIENTE 1%";
+        document.getElementById('nextBtn').innerText = (currentDay === 29) ? "FINALIZAR" : "SIGUIENTE 1%";
     }
 
-    document.getElementById('unlock-button').onclick = function() {
-        const userPass = document.getElementById('pass-input').value.trim().toUpperCase();
-        if (userPass === SECRET_KEY || userPass === "GUITARRA") {
-            localStorage.setItem('guitar_unlocked', 'true');
-            showApp();
-        } else {
-            alert("Clave incorrecta. ¡Escríbeme si necesitas ayuda!");
-        }
+    document.getElementById('unlock-button').onclick = () => {
+        if(document.getElementById('pass-input').value.trim().toUpperCase() === SECRET_KEY) {
+            localStorage.setItem('guitar_ok', 'true');
+            document.getElementById('auth-screen').style.display = 'none';
+            document.getElementById('app-content').style.display = 'block';
+            updateUI();
+        } else { alert("Clave incorrecta"); }
     };
 
     document.getElementById('prevBtn').onclick = () => { if(currentDay > 0) { currentDay--; updateUI(); } };
-    document.getElementById('nextBtn').onclick = () => { if(currentDay < plan.length - 1) { currentDay++; updateUI(); } };
+    document.getElementById('nextBtn').onclick = () => { if(currentDay < 29) { currentDay++; updateUI(); } };
 
-    window.onload = function() {
-        if (localStorage.getItem('guitar_unlocked') === 'true') { showApp(); }
-    };
+    window.onload = () => { if(localStorage.getItem('guitar_ok') === 'true') { 
+        document.getElementById('auth-screen').style.display = 'none';
+        document.getElementById('app-content').style.display = 'block';
+        updateUI(); 
+    }};
 </script>
 </body>
 </html>
