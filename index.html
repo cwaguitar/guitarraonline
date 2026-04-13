@@ -3,168 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Office Warrior 30d</title>
+    <title>Warrior 30D - Home Office</title>
     <style>
-        :root {
-            --primary: #6366f1;
-            --bg: #f8fafc;
-            --card: #ffffff;
-            --text: #1e293b;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .app-container {
-            max-width: 500px;
-            width: 100%;
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .card {
-            background: var(--card);
-            padding: 25px;
-            border-radius: 20px;
-            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
-            text-align: center;
-        }
-
-        .day-badge {
-            background: var(--primary);
-            color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-weight: bold;
-            display: inline-block;
-            margin-bottom: 10px;
-        }
-
-        ul {
-            list-style: none;
-            padding: 0;
-            text-align: left;
-            margin: 20px 0;
-        }
-
-        li {
-            padding: 10px 0;
-            border-bottom: 1px solid #f1f5f9;
-            display: flex;
-            align-items: center;
-        }
-
-        li::before {
-            content: "⚡";
-            margin-right: 10px;
-        }
-
-        .controls {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
-            gap: 10px;
-        }
-
-        button {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 12px;
-            cursor: pointer;
-            flex: 1;
-            font-weight: bold;
-            transition: opacity 0.2s;
-        }
-
-        button:disabled {
-            background: #cbd5e1;
-        }
-
-        .pro-tip {
-            margin-top: 20px;
-            font-size: 0.9em;
-            font-style: italic;
-            color: #64748b;
-            border-top: 1px dashed #cbd5e1;
-            padding-top: 15px;
-        }
+        :root { --primary: #6366f1; --bg: #f8fafc; --card: #ffffff; --text: #1e293b; }
+        body { font-family: sans-serif; background-color: var(--bg); color: var(--text); display: flex; flex-direction: column; align-items: center; padding: 20px; }
+        .app-container { max-width: 500px; width: 100%; }
+        .card { background: var(--card); padding: 25px; border-radius: 20px; box-shadow: 0 10px 15px rgba(0,0,0,0.1); text-align: center; }
+        .day-badge { background: var(--primary); color: white; padding: 5px 15px; border-radius: 20px; font-weight: bold; display: inline-block; margin-bottom: 10px; }
+        ul { list-style: none; padding: 0; text-align: left; margin: 20px 0; }
+        li { padding: 10px 0; border-bottom: 1px solid #f1f5f9; }
+        .controls { display: flex; justify-content: space-between; gap: 10px; }
+        button { background: var(--primary); color: white; border: none; padding: 12px 20px; border-radius: 12px; cursor: pointer; flex: 1; font-weight: bold; }
+        button:disabled { background: #cbd5e1; }
+        .pro-tip { margin-top: 20px; font-size: 0.9em; font-style: italic; color: #64748b; border-top: 1px dashed #cbd5e1; padding-top: 15px; }
     </style>
 </head>
 <body>
 
 <div class="app-container">
-    <header>
+    <header style="text-align: center;">
         <h1>Warrior 30D 🧘‍♂️</h1>
-        <p>Tu espalda te lo agradecerá.</p>
     </header>
 
-    <div class="card" id="workout-card">
+    <div class="card">
         <div id="day-label" class="day-badge">Día 1</div>
-        <h2 id="day-title">Cargando energía...</h2>
-        <ul id="exercise-list">
-            </ul>
+        <h2 id="day-title">Cargando...</h2>
+        <ul id="exercise-list"></ul>
         <p class="pro-tip" id="pro-tip"></p>
 
         <div class="controls">
-            <button id="prevBtn" onclick="changeDay(-1)">Anterior</button>
-            <button id="nextBtn" onclick="changeDay(1)">Siguiente</button>
+            <button id="prevBtn">Anterior</button>
+            <button id="nextBtn">Siguiente</button>
         </div>
     </div>
 </div>
 
 <script>
-    // Datos de la aplicación
-    const plan = const plan = [
-        // SEMANA 1: MOVILIDAD Y POSTURA
-        { title: "Día 1: Despertar Postural", exercises: ["10 Rotaciones cuello", "15 Aperturas pecho", "Plancha 30s"], tip: "Monitor a la altura de los ojos." },
-        { title: "Día 2: Adiós Silla", exercises: ["20 Sentadillas silla", "10 Estocadas", "Estiramiento Psoas"], tip: "Levántate cada 50 minutos." },
-        { title: "Día 3: Espalda Fuerte", exercises: ["15 Supermans (suelo)", "10 Bird-Dog", "Plancha 40s"], tip: "No cruces las piernas al sentarte." },
-        { title: "Día 4: Hombros Libres", exercises: ["15 Giros hombros", "10 Flexiones pared", "Estiramiento tríceps"], tip: "Bebe 1 vaso de agua tras cada reunión." },
-        { title: "Día 5: Core Estable", exercises: ["30s Plancha lateral", "15 Deadbugs", "10 Puentes glúteo"], tip: "Tu espalda baja debe tocar el respaldo." },
-        { title: "Día 6: Circuito Energía", exercises: ["20 Jumping Jacks", "10 Sentadillas", "10 Flexiones"], tip: "Hoy trabaja de pie 15 minutos si puedes." },
-        { title: "Día 7: Estiramiento Total", exercises: ["5 min Yoga suave", "Estiramiento cuello", "Respiración profunda"], tip: "Día de descanso activo. Camina fuera." },
-
-        // SEMANA 2: FUERZA FUNCIONAL
-        { title: "Día 8: Tren Inferior", exercises: ["25 Sentadillas", "15 Zancadas", "Silla isométrica 30s"], tip: "Usa calzado cómodo, incluso en casa." },
-        { title: "Día 9: Tren Superior", exercises: ["12 Flexiones suelo", "15 Fondos sofá", "10 "], tip: "Limpia tu escritorio, despeja la mente." },
-        { title: "Día 10: Cardio Express", exercises: ["30 Mountain Climbers", "20 Skiping", "Plancha 45s"], tip: "La fatiga mental se quita con sudor." },
-        { title: "Día 11: Espalda de Acero", exercises: ["15 " "10 Bird-Dog lentos", "15 Superman"], tip: "Mira al horizonte 2 minutos para descansar la vista." },
-        { title: "Día 12: Glúteos y Core", exercises: ["20 Puentes glúteo", "15 Clamshells", "Plancha 1 min"], tip: "Aprieta el abdomen mientras escribes." },
-        { title: "Día 13: Reto de Brazos", exercises: ["20 Flexiones pared", "20 Fondos silla", "Círculos brazos"], tip: "Evita el exceso de cafeína después de las 3 PM." },
-        { title: "Día 14: Relax Activo", exercises: ["Estiramiento largo", "Caminar 30 min", "Movilidad articular"], tip: "Desconecta el Slack/Teams por completo hoy." },
-
-        // SEMANA 3: RESISTENCIA HIIT
-        { title: "Día 15: Quemando Calorías", exercises: ["30s Burpees", "30s Descanso", "Repetir 5 veces"], tip: "Ventila tu habitación antes de entrenar." },
-        { title: "Día 16: Piernas de Hierro", exercises: ["15 Sentadillas salto", "20 Zancadas", "1 min Silla pared"], tip: "Sube las escaleras de tu edificio 2 veces." },
-        { title: "Día 17: Abdominales", exercises: ["20 Crunches", "20 Toques talón", "30s Bicicleta"], tip: "Cena ligero para dormir mejor." },
-        { title: "Día 18: Pecho y Tríceps", exercises: ["15 Flexiones", "15 Fondos", "Plancha diamante"], tip: "Organiza tu agenda de mañana hoy mismo." },
-        { title: "Día 19: Agilidad", exercises: ["40 Jumping Jacks", "20 Escaladores", "10 Burpees"], tip: "Si duele la cabeza, estira el cuello." },
-        { title: "Día 20: Postura Perfecta", exercises: ["20 " "Wall slide 15 reps", "Plancha"], tip: "Usa la regla 20-20-20 para tus ojos." },
-        { title: "Día 21: Recuperación", exercises: ["Estiramiento yoga", "Baño caliente", "Meditación 5 min"], tip: "Día de descanso. Lee un libro físico." },
-
-        // SEMANA 4: EL GUERRERO REMOTO
-        { title: "Día 22: Full Body 1", exercises: ["20 Sentadillas", "15 Flexiones", "20 Abdominales"], tip: "Ya casi lo tienes, mantén el ritmo." },
-        { title: "Día 23: Full Body 2", exercises: ["20 Zancadas", "15 Fondos", "1 min Plancha"], tip: "Tu energía por la tarde debería ser mayor ahora." },
-        { title: "Día 24: Explosividad", exercises: ["30s Burpees", "30s Jumping Jacks", "30s Escaladores"], tip: "El éxito es la suma de pequeños esfuerzos." },
-        { title: "Día 25: Fuerza Máxima", exercises: ["Flexiones al fallo", "Sentadillas al fallo", "Plancha al fallo"], tip: "No te rindas, eres más fuerte que el primer día." },
-        { title: "Día 26: Movilidad Pro", exercises: ["Saludo al sol x5", "Estiramiento Cobra", "Postura del niño"], tip: "La flexibilidad mental empieza en el cuerpo." },
-        { title: "Día 27: Resistencia", exercises: ["Plancha 1:30 min", "50 Jumping Jacks", "20 Flexiones"], tip: "Sonríe, estás cambiando tus hábitos." },
-        { title: "Día 28: Repaso General", exercises: ["10 reps de cada ejercicio favorito"], tip: "Mira atrás y mira cuánto has avanzado." },
-        { title: "Día 29: El Desafío", exercises: ["Circuito HIIT 10 min sin parar"], tip: "Prepara una recompensa saludable para mañana." },
-        { title: "Día 30: ¡Victoria!", exercises: ["30 min de tu actividad favorita", "Celebración"], tip: "¡Felicidades, Guerrero Remoto! ¿Listo para el mes 2?" }
+    const plan = [
+        { title: "Despertar Postural", exercises: ["10 Rotaciones cuello", "15 Aperturas pecho", "Plancha 30s"], tip: "Monitor a la altura de los ojos." },
+        { title: "Adiós Silla", exercises: ["20 Sentadillas silla", "10 Estocadas", "Estiramiento Psoas"], tip: "Levántate cada 50 minutos." },
+        { title: "Espalda Fuerte", exercises: ["15 Supermans (suelo)", "10 Bird-Dog", "Plancha 40s"], tip: "No cruces las piernas al sentarte." },
+        { title: "Hombros Libres", exercises: ["15 Giros hombros", "10 Flexiones pared", "Estiramiento tríceps"], tip: "Bebe 1 vaso de agua tras cada reunión." },
+        { title: "Core Estable", exercises: ["30s Plancha lateral", "15 Deadbugs", "10 Puentes glúteo"], tip: "Tu espalda baja debe tocar el respaldo." },
+        { title: "Circuito Energía", exercises: ["20 Jumping Jacks", "10 Sentadillas", "10 Flexiones"], tip: "Hoy trabaja de pie 15 minutos si puedes." },
+        { title: "Estiramiento Total", exercises: ["5 min Yoga suave", "Estiramiento cuello", "Respiración profunda"], tip: "Día de descanso activo. Camina fuera." },
+        { title: "Tren Inferior", exercises: ["25 Sentadillas", "15 Zancadas", "Silla isométrica 30s"], tip: "Usa calzado cómodo, incluso en casa." },
+        { title: "Tren Superior", exercises: ["12 Flexiones suelo", "15 Fondos sofá", "Plancha 30s"], tip: "Limpia tu escritorio, despeja la mente." },
+        { title: "Cardio Express", exercises: ["30 Mountain Climbers", "20 Skiping", "Plancha 45s"], tip: "La fatiga mental se quita con sudor." },
+        { title: "Espalda de Acero", exercises: ["15 Bird-Dog lentos", "15 Superman", "Remo imaginario"], tip: "Mira al horizonte 2 minutos para descansar la vista." },
+        { title: "Glúteos y Core", exercises: ["20 Puentes glúteo", "15 Clamshells", "Plancha 1 min"], tip: "Aprieta el abdomen mientras escribes." },
+        { title: "Reto de Brazos", exercises: ["20 Flexiones pared", "20 Fondos silla", "Círculos brazos"], tip: "Evita el exceso de cafeína después de las 3 PM." },
+        { title: "Relax Activo", exercises: ["Estiramiento largo", "Caminar 30 min", "Movilidad articular"], tip: "Desconecta el Slack/Teams por completo hoy." },
+        { title: "Quemando Calorías", exercises: ["30s Burpees", "30s Descanso", "Repetir 5 veces"], tip: "Ventila tu habitación antes de entrenar." },
+        { title: "Piernas de Hierro", exercises: ["15 Sentadillas salto", "20 Zancadas", "1 min Silla pared"], tip: "Sube las escaleras de tu edificio 2 veces." },
+        { title: "Abdominales", exercises: ["20 Crunches", "20 Toques talón", "30s Bicicleta"], tip: "Cena ligero para dormir mejor." },
+        { title: "Pecho y Tríceps", exercises: ["15 Flexiones", "15 Fondos", "Plancha diamante"], tip: "Organiza tu agenda de mañana hoy mismo." },
+        { title: "Agilidad", exercises: ["40 Jumping Jacks", "20 Escaladores", "10 Burpees"], tip: "Si duele la cabeza, estira el cuello." },
+        { title: "Postura Perfecta", exercises: ["Wall slide 15 reps", "Plancha", "Apertura pecho"], tip: "Usa la regla 20-20-20 para tus ojos." },
+        { title: "Recuperación", exercises: ["Estiramiento yoga", "Baño caliente", "Meditación 5 min"], tip: "Día de descanso. Lee un libro físico." },
+        { title: "Full Body 1", exercises: ["20 Sentadillas", "15 Flexiones", "20 Abdominales"], tip: "Ya casi lo tienes, mantén el ritmo." },
+        { title: "Full Body 2", exercises: ["20 Zancadas", "15 Fondos", "1 min Plancha"], tip: "Tu energía por la tarde debería ser mayor ahora." },
+        { title: "Explosividad", exercises: ["30s Burpees", "30s Jumping Jacks", "30s Escaladores"], tip: "El éxito es la suma de pequeños esfuerzos." },
+        { title: "Fuerza Máxima", exercises: ["Flexiones al fallo", "Sentadillas al fallo", "Plancha al fallo"], tip: "No te rindas, eres más fuerte que el primer día." },
+        { title: "Movilidad Pro", exercises: ["Saludo al sol x5", "Estiramiento Cobra", "Postura del niño"], tip: "La flexibilidad mental empieza en el cuerpo." },
+        { title: "Resistencia", exercises: ["Plancha 1:30 min", "50 Jumping Jacks", "20 Flexiones"], tip: "Sonríe, estás cambiando tus hábitos." },
+        { title: "Repaso General", exercises: ["10 reps de cada ejercicio favorito"], tip: "Mira atrás y mira cuánto has avanzado." },
+        { title: "El Desafío", exercises: ["Circuito HIIT 10 min sin parar"], tip: "Prepara una recompensa saludable para mañana." },
+        { title: "¡Victoria!", exercises: ["30 min de tu actividad favorita", "Celebración"], tip: "¡Felicidades, Guerrero Remoto!" }
     ];
 
     let currentDay = 0;
@@ -179,7 +84,7 @@
         list.innerHTML = "";
         data.exercises.forEach(ex => {
             const li = document.createElement('li');
-            li.innerText = ex;
+            li.innerText = `⚡ ${ex}`;
             list.appendChild(li);
         });
 
@@ -187,14 +92,15 @@
         document.getElementById('nextBtn').disabled = currentDay === plan.length - 1;
     }
 
-    function changeDay(delta) {
-        currentDay += delta;
-        updateUI();
-    }
+    document.getElementById('prevBtn').addEventListener('click', () => {
+        if(currentDay > 0) { currentDay--; updateUI(); }
+    });
 
-    // Inicializar
+    document.getElementById('nextBtn').addEventListener('click', () => {
+        if(currentDay < plan.length - 1) { currentDay++; updateUI(); }
+    });
+
     updateUI();
 </script>
-
 </body>
 </html>
