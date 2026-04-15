@@ -3,158 +3,195 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guitarra con Jose | Entrenamiento Inteligente</title>
+    <title>Guitarra con Jose | Neuro-Training</title>
     <style>
-        :root { --primary: #fbbf24; --bg: #0a0f1d; --card: #161e2d; --text: #f8fafc; --accent: #f59e0b; }
-        body { font-family: 'Segoe UI', system-ui, sans-serif; background-color: var(--bg); color: var(--text); display: flex; flex-direction: column; align-items: center; padding: 10px; min-height: 100vh; margin: 0; padding-bottom: 100px; }
+        :root { --primary: #fbbf24; --bg: #050811; --card: #111827; --text: #f8fafc; --success: #10b981; }
+        body { font-family: 'Inter', system-ui, sans-serif; background-color: var(--bg); color: var(--text); display: flex; flex-direction: column; align-items: center; margin: 0; padding-bottom: 100px; overflow-x: hidden; }
         
-        /* Acceso con Toque de Marketing */
-        #auth-screen { max-width: 450px; width: 100%; text-align: center; margin-top: 40px; background: var(--card); padding: 40px 25px; border-radius: 28px; border: 1px solid #2d3748; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
-        .logo-circle { width: 70px; height: 70px; background: var(--primary); color: #000; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; margin: 0 auto 20px; font-size: 24px; }
-        .promise { font-size: 0.85em; color: var(--primary); font-weight: bold; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; display: block; }
-        input { width: 85%; padding: 15px; margin-bottom: 15px; border: 2px solid #2d3748; background: #0a0f1d; color: white; border-radius: 12px; text-align: center; font-size: 1em; }
-        .btn-unlock { background: var(--primary); color: #000; border: none; padding: 18px; border-radius: 12px; font-weight: 800; cursor: pointer; width: 95%; font-size: 1.1em; transition: 0.3s; }
-        .btn-unlock:hover { transform: scale(1.02); box-shadow: 0 0 20px rgba(251, 191, 36, 0.4); }
+        /* HEADER GAMIFICADO */
+        .status-bar { width: 100%; background: #1f2937; padding: 15px 0; display: flex; justify-content: center; gap: 20px; sticky: top; z-index: 1000; border-bottom: 1px solid #374151; }
+        .stat { display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 0.9em; }
+        .fire { color: #f97316; filter: drop-shadow(0 0 5px #f97316); }
 
-        /* Contenedor Principal */
-        #app-content { display: none; max-width: 500px; width: 100%; animation: fadeIn 0.5s; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        
-        /* Imagen */
-        .image-viewer { width: 100%; aspect-ratio: 16/9; background: #000; border-radius: 20px; margin-bottom: 20px; overflow: hidden; border: 1px solid #334155; position: relative; }
-        .image-viewer img { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; }
-        
-        /* Notas de Jose (Marketing Contextual) */
-        .jose-note { background: rgba(251, 191, 36, 0.1); border-left: 4px solid var(--primary); padding: 15px; border-radius: 12px; margin-bottom: 20px; font-size: 0.85em; color: #cbd5e1; line-height: 1.4; }
-        .jose-note b { color: var(--primary); display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.9em; }
+        /* PANTALLA DE ACCESO */
+        #auth-screen { max-width: 400px; width: 90%; text-align: center; margin-top: 60px; background: var(--card); padding: 40px 20px; border-radius: 30px; border: 1px solid #374151; }
+        input { width: 80%; padding: 15px; margin: 20px 0; border: 2px solid #374151; background: #050811; color: white; border-radius: 15px; text-align: center; }
+        .btn-main { background: var(--primary); color: #000; border: none; padding: 18px 40px; border-radius: 15px; font-weight: 900; cursor: pointer; width: 90%; text-transform: uppercase; }
 
-        /* Tarjeta de Lección */
-        .lesson-card { background: var(--card); padding: 25px; border-radius: 25px; border: 1px solid #2d3748; }
-        .task-item { background: #0a0f1d; border-radius: 15px; margin-bottom: 12px; border: 1px solid #2d3748; padding: 15px; }
-        .task-item b { color: var(--primary); font-size: 0.9em; }
-        .task-item span { font-size: 0.9em; display: block; color: #94a3b8; margin-top: 5px; }
+        /* APP CONTENT */
+        #app-content { display: none; width: 95%; max-width: 500px; margin-top: 20px; animation: slideUp 0.5s ease; }
+        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
-        /* Navegación Fija */
-        .nav-bar { position: fixed; bottom: 0; left: 0; right: 0; background: #1e293b; padding: 20px; display: flex; justify-content: center; gap: 15px; border-top: 1px solid #334155; z-index: 100; }
-        .nav-btn { background: #334155; color: white; border: none; padding: 15px 25px; border-radius: 14px; font-weight: bold; cursor: pointer; min-width: 120px; transition: 0.3s; }
-        .nav-btn.next { background: var(--primary); color: black; flex-grow: 1; }
-        .nav-btn:disabled { opacity: 0.5; cursor: not-allowed; filter: grayscale(1); }
+        /* NIVEL Y XP */
+        .xp-container { background: #1f2937; height: 12px; border-radius: 6px; margin: 10px 0; overflow: hidden; border: 1px solid #374151; }
+        #xp-bar { background: linear-gradient(90deg, #fbbf24, #f59e0b); height: 100%; width: 0%; transition: width 0.5s; }
+
+        /* VISUALIZADOR PRO */
+        .main-stage { width: 100%; aspect-ratio: 16/9; background: #000; border-radius: 25px; margin-bottom: 20px; overflow: hidden; border: 2px solid #374151; position: relative; box-shadow: 0 0 30px rgba(0,0,0,0.5); }
+        .main-stage img { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; }
+        .badge-pop { position: absolute; top: 10px; right: 10px; background: var(--primary); color: black; padding: 5px 12px; border-radius: 20px; font-size: 0.7em; font-weight: 900; display: none; animation: pop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        @keyframes pop { from { scale: 0; } to { scale: 1; } }
+
+        /* TAREAS INTERACTIVAS */
+        .task-box { background: var(--card); padding: 20px; border-radius: 25px; border: 1px solid #374151; margin-bottom: 80px; }
+        .task-card { background: #050811; padding: 15px; border-radius: 15px; margin-bottom: 10px; border-left: 4px solid #374151; transition: 0.3s; }
+        .task-card.done { border-left-color: var(--success); background: #064e3b33; }
+
+        /* BARRA NAVEGACIÓN */
+        .nav-bar { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(17, 24, 39, 0.95); backdrop-filter: blur(10px); padding: 20px; display: flex; gap: 10px; border-top: 1px solid #374151; }
+        .btn-nav { flex: 1; padding: 15px; border-radius: 12px; border: none; font-weight: 800; cursor: pointer; transition: 0.2s; }
+        .btn-next { background: var(--primary); color: black; }
+        .btn-next:disabled { filter: grayscale(1); opacity: 0.5; }
     </style>
 </head>
 <body>
 
+<div class="status-bar" id="top-bar" style="display: none;">
+    <div class="stat fire">🔥 <span id="streak-val">0</span> DÍAS</div>
+    <div class="stat">⭐ NIVEL: <span id="level-val">NOVATO</span></div>
+    <div class="stat" style="color: var(--primary);">XP: <span id="xp-val">0</span></div>
+</div>
+
 <div id="auth-screen">
     <div class="logo-circle">1%</div>
-    <span class="promise">Neuro-Entrenamiento de Guitarra</span>
-    <h2 style="margin-top: 0;">Guitarra con Jose</h2>
-    <p style="font-size: 0.8em; color: #94a3b8; margin-bottom: 25px; padding: 0 10px;">
-        "Este software detecta tu tiempo de práctica. No te dejará avanzar si no has dedicado el tiempo mínimo necesario para que tus neuronas creen la conexión muscular."
-    </p>
-    <input type="text" id="pass-input" placeholder="Tu Clave de Alumno">
-    <button class="btn-unlock" id="unlock-button">DESBLOQUEAR MI 1%</button>
+    <h2 style="margin: 0;">Jose Guitar</h2>
+    <p style="color: #94a3b8; font-size: 0.8em;">Neuro-Entrenamiento de Guitarra</p>
+    <input type="text" id="pass-input" placeholder="Clave de Acceso">
+    <button class="btn-main" onclick="login()">DESBLOQUEAR MI POTENCIAL</button>
 </div>
 
 <div id="app-content">
-    <div class="jose-note">
-        <b>💡 El Consejo de Jose:</b>
-        <span id="dynamic-tip">Si te duelen las puntas de los dedos, para inmediatamente. Tu piel necesita crear callo y eso toma tiempo. No fuerces tu 1%.</span>
+    <div class="xp-container"><div id="xp-bar"></div></div>
+    
+    <div class="main-stage">
+        <img id="lesson-img" src="" alt="Clase">
+        <div id="badge" class="badge-pop">¡LOGRO DESBLOQUEADO!</div>
     </div>
 
-    <div class="image-viewer"><img id="main-img" src="" alt="Clase"></div>
-
-    <div class="lesson-card">
-        <h3 id="lesson-title" style="margin: 0;"></h3>
-        <p id="lesson-day" style="color: var(--primary); font-size: 0.8em; font-weight: bold; margin-bottom: 20px;"></p>
-        <div id="tasks-container"></div>
+    <div class="task-box">
+        <h3 id="lesson-title" style="margin-top: 0;"></h3>
+        <p id="lesson-desc" style="font-size: 0.9em; color: #94a3b8; margin-bottom: 20px;"></p>
+        <div id="tasks-list"></div>
     </div>
 </div>
 
 <div class="nav-bar" id="nav-bar" style="display: none;">
-    <button class="nav-btn" onclick="changeDay(-1)">Atrás</button>
-    <button class="nav-btn next" id="btn-next" onclick="changeDay(1)">Bloqueado</button>
+    <button class="btn-nav" style="background: #374151; color: white;" onclick="changeDay(-1)">ANTERIOR</button>
+    <button class="btn-nav btn-next" id="timer-btn" onclick="changeDay(1)">CARGANDO ENTRENAMIENTO...</button>
 </div>
 
 <script>
-    const SECRET_KEY = "GUITARRA1";
-    const MINUTOS_PRACTICA = 0; // Tiempo real que debe practicar
-    let currentDay = parseInt(localStorage.getItem('saved_day')) || 0;
+    const KEY = "GUITARRA1";
+    let currentDay = parseInt(localStorage.getItem('jg_day')) || 0;
+    let xp = parseInt(localStorage.getItem('jg_xp')) || 0;
+    let streak = parseInt(localStorage.getItem('jg_streak')) || 0;
     let timer;
 
-    const tips = [
-        "La paciencia es tu mejor cuerda. No busques sonar rápido hoy, busca sonar limpio.",
-        "Asegúrate de que tus uñas de la mano izquierda estén cortas para pisar bien los acordes.",
-        "Tu cerebro aprende mientras duermes. Practica hoy y mañana serás mejor sin hacer nada.",
-        "Si el acorde suena 'muerto', asegúrate de que tus dedos estén como ganchos, bien arqueados.",
-        "El 1% diario es mejor que el 100% un solo día a la semana. La constancia es el secreto."
+    const levels = ["NOVATO", "APRENDIZ", "RITMISTA", "SOLISTA", "MAESTRO", "LEYENDA"];
+
+    const course = [
+        { t: "La Postura del Guerrero", d: "Aprende a sostener la guitarra sin fatiga muscular.", img: "https://images.unsplash.com/photo-1550291652-6ea9114a47b1?q=80&w=800", steps: ["Siéntate en el borde de la silla", "Mástil a 45 grados", "Relaja el hombro izquierdo"] },
+        { t: "El Pilar: Do Mayor (C)", d: "El acorde más importante de la música occidental.", img: "https://images.unsplash.com/photo-1510915361894-db8b60106cb1?q=80&w=800", steps: ["Dedo 1: T1 C2", "Dedo 2: T2 C4", "Dedo 3: T3 C5", "No toques la cuerda 6"] },
+        { t: "Energía: Mi Mayor (E)", d: "Siente la potencia de las cuerdas al aire.", img: "https://images.unsplash.com/photo-1516924962500-2b4b3b99ea02?q=80&w=800", steps: ["D1 en T1 C3", "D2 en T2 C5", "D3 en T2 C4", "Rasca las 6 cuerdas"] },
+        // ... añadir hasta 30
     ];
 
-    const plan = [
-        { t: "Postura y Primer Contacto", img: "https://images.unsplash.com/photo-1550291652-6ea9114a47b1?q=80&w=800", tasks: ["Cuerpo recto y relajado", "Guitarra apoyada en la pierna derecha", "Rasgueo suave hacia abajo con pulgar"] },
-        { t: "Do Mayor (C): El Pilar", img: "https://images.unsplash.com/photo-1510915361894-db8b60106cb1?q=80&w=800", tasks: ["Dedo 1 en T1 C2", "Dedo 2 en T2 C4", "Dedo 3 en T3 C5", "Evita tocar la cuerda 6"] },
-        { t: "Re Mayor (D): Claridad", img: "https://images.unsplash.com/photo-1516924962500-2b4b3b99ea02?q=80&w=800", tasks: ["Dedo 1 en T2 C3", "Dedo 2 en T2 C1", "Dedo 3 en T3 C2", "Toca desde la cuerda 4"] },
-        // ... añadir aquí el resto de los 30 días
-    ];
+    function login() {
+        if(document.getElementById('pass-input').value.toUpperCase() === KEY) {
+            document.getElementById('auth-screen').style.display = 'none';
+            document.getElementById('app-content').style.display = 'block';
+            document.getElementById('nav-bar').style.display = 'flex';
+            document.getElementById('top-bar').style.display = 'flex';
+            checkStreak();
+            updateUI();
+        } else { alert("Clave inválida"); }
+    }
 
-    // Autogenerador para demostración
-    for(let i=3; i<30; i++) {
-        plan.push({ t: `Entrenamiento Día ${i+1}`, img: "https://images.unsplash.com/photo-1550291652-6ea9114a47b1?q=80&w=800", tasks: ["Sigue las indicaciones del video", "Mantén el ritmo del metrónomo", "Cero distracciones por 10 min"] });
+    function checkStreak() {
+        const lastLogin = localStorage.getItem('jg_last_date');
+        const today = new Date().toDateString();
+        
+        if (lastLogin !== today) {
+            if (lastLogin === new Date(Date.now() - 86400000).toDateString()) {
+                streak++;
+            } else if (!lastLogin) {
+                streak = 1;
+            } else {
+                streak = 1; // Racha rota
+            }
+            localStorage.setItem('jg_last_date', today);
+            localStorage.setItem('jg_streak', streak);
+        }
+        document.getElementById('streak-val').innerText = streak;
     }
 
     function updateUI() {
-        const data = plan[currentDay];
+        const data = course[currentDay] || course[0];
         document.getElementById('lesson-title').innerText = data.t;
-        document.getElementById('lesson-day').innerText = `DÍA ${currentDay + 1} / 30`;
-        document.getElementById('main-img').src = data.img;
-        document.getElementById('dynamic-tip').innerText = tips[currentDay % tips.length];
+        document.getElementById('lesson-desc').innerText = data.d;
+        document.getElementById('lesson-img').src = data.img;
         
-        const container = document.getElementById('tasks-container');
-        container.innerHTML = `
-            <div class="task-item"><b>PASO 1: Calentamiento</b><span>Mueve tus dedos por el mástil durante 2 minutos.</span></div>
-            <div class="task-item"><b>PASO 2: Técnica Focal</b><span>${data.tasks.join('. ')}</span></div>
-            <div class="task-item"><b>PASO 3: Consolidación 1%</b><span>Repite este ejercicio hasta que el cronómetro se libere.</span></div>
-        `;
-        
-        iniciarCronometro();
-        localStorage.setItem('saved_day', currentDay);
+        // Cargar tareas
+        const list = document.getElementById('tasks-list');
+        list.innerHTML = "";
+        data.steps.forEach((s, i) => {
+            const div = document.createElement('div');
+            div.className = "task-card";
+            div.innerHTML = `<b>${i+1}.</b> ${s}`;
+            list.appendChild(div);
+        });
+
+        // Niveles y XP
+        const levelIdx = Math.floor(xp / 500);
+        document.getElementById('level-val').innerText = levels[levelIdx] || "MAESTRO";
+        document.getElementById('xp-val').innerText = xp;
+        document.getElementById('xp-bar').style.width = `${(xp % 500) / 5}%`;
+
+        startTimer();
     }
 
-    function iniciarCronometro() {
-        const btnNext = document.getElementById('btn-next');
-        let segundos = MINUTOS_PRACTICA * 60;
-        
-        btnNext.disabled = true;
+    function startTimer() {
+        const btn = document.getElementById('timer-btn');
+        let sec = 300; // 5 minutos de práctica real
+        btn.disabled = true;
+
         clearInterval(timer);
-        
         timer = setInterval(() => {
-            segundos--;
-            let m = Math.floor(segundos / 60);
-            let s = segundos % 60;
-            btnNext.innerText = `PRACTICA ${m}:${s < 10 ? '0' : ''}${s}`;
+            sec--;
+            let m = Math.floor(sec / 60);
+            let s = sec % 60;
+            btn.innerText = `ENTRENANDO: ${m}:${s < 10 ? '0' : ''}${s}`;
             
-            if(segundos <= 0) {
+            // Sumar XP por segundo de práctica
+            xp += 1;
+            document.getElementById('xp-val').innerText = xp;
+            localStorage.setItem('jg_xp', xp);
+
+            if(sec <= 0) {
                 clearInterval(timer);
-                btnNext.disabled = false;
-                btnNext.innerText = "SIGUIENTE NIVEL →";
+                btn.disabled = false;
+                btn.innerText = "¡1% COMPLETADO! SIGUIENTE →";
+                showBadge("¡SESIÓN COMPLETADA +100 XP!");
+                xp += 100;
             }
         }, 1000);
+    }
+
+    function showBadge(msg) {
+        const b = document.getElementById('badge');
+        b.innerText = msg;
+        b.style.display = 'block';
+        setTimeout(() => b.style.display = 'none', 3000);
     }
 
     function changeDay(dir) {
         if(currentDay + dir >= 0 && currentDay + dir < 30) {
             currentDay += dir;
+            localStorage.setItem('jg_day', currentDay);
             updateUI();
             window.scrollTo(0,0);
         }
     }
-
-    document.getElementById('unlock-button').onclick = () => {
-        if(document.getElementById('pass-input').value.toUpperCase() === SECRET_KEY) {
-            document.getElementById('auth-screen').style.display = 'none';
-            document.getElementById('app-content').style.display = 'block';
-            document.getElementById('nav-bar').style.display = 'flex';
-            updateUI();
-        } else { alert("Clave incorrecta"); }
-    };
 </script>
 </body>
 </html>
