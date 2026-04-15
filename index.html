@@ -6,52 +6,45 @@
     <title>Jose Guitar | Elite Training</title>
     <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Inter:wght@300;600;900&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #fbbf24; --bg: #05070a; --card: #10141d; --text: #ffffff; --accent: #f59e0b; }
+        :root { --primary: #fbbf24; --bg: #05070a; --card: #10141d; --text: #ffffff; }
         body { font-family: 'Inter', sans-serif; background-color: var(--bg); color: var(--text); margin: 0; padding-bottom: 100px; overflow-x: hidden; }
         
-        /* PORTADA DE ALTO IMPACTO */
+        /* PORTADA CON TU FOTO DSC_0184.JPG */
         #auth-screen { 
             height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center;
-            background: radial-gradient(circle at center, #1a1f2e 0%, #05070a 100%);
+            background-image: linear-gradient(to bottom, rgba(5, 7, 10, 0.3) 0%, rgba(5, 7, 10, 1) 95%), url('DSC_0184.JPG');
+            background-size: cover;
+            background-position: center;
             text-align: center; padding: 0 20px;
         }
-        .hero-logo { font-family: 'Syncopate', sans-serif; font-size: 2.5rem; font-weight: 700; letter-spacing: -2px; margin-bottom: 5px; color: var(--primary); text-shadow: 0 0 20px rgba(251, 191, 36, 0.3); }
-        .hero-sub { text-transform: uppercase; letter-spacing: 5px; font-size: 0.7rem; opacity: 0.6; margin-bottom: 40px; }
-        
-        .login-box { background: rgba(255,255,255,0.03); padding: 30px; border-radius: 40px; border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(10px); width: 100%; max-width: 320px; }
-        input { width: 90%; padding: 18px; background: #000; border: 1px solid #333; color: white; border-radius: 15px; margin-bottom: 15px; text-align: center; font-family: 'Syncopate'; }
-        .btn-glow { 
-            background: var(--primary); color: black; border: none; padding: 20px; width: 100%; border-radius: 15px; 
-            font-weight: 900; cursor: pointer; text-transform: uppercase; transition: 0.4s;
-            box-shadow: 0 10px 30px rgba(251, 191, 36, 0.3);
-        }
-        .btn-glow:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(251, 191, 36, 0.5); }
 
-        /* STATUS BAR SUPERIOR */
-        .top-nav { width: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); padding: 15px 0; display: flex; justify-content: center; gap: 25px; border-bottom: 1px solid #222; position: sticky; top: 0; z-index: 99; }
-        .stat-item { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; font-weight: 700; }
+        .hero-logo { font-family: 'Syncopate', sans-serif; font-size: 2.2rem; font-weight: 700; letter-spacing: -1px; color: var(--primary); margin-bottom: 5px; text-shadow: 0 0 15px rgba(251, 191, 36, 0.5); }
+        .hero-sub { text-transform: uppercase; letter-spacing: 4px; font-size: 0.65rem; opacity: 0.8; margin-bottom: 30px; }
+        
+        .login-box { background: rgba(0,0,0,0.6); padding: 30px; border-radius: 35px; border: 1px solid rgba(251,191,36,0.2); backdrop-filter: blur(8px); width: 100%; max-width: 300px; }
+        input { width: 85%; padding: 16px; background: #000; border: 1px solid #444; color: white; border-radius: 12px; margin-bottom: 15px; text-align: center; font-family: 'Syncopate'; font-size: 0.8rem; }
+        .btn-glow { background: var(--primary); color: black; border: none; padding: 18px; width: 100%; border-radius: 12px; font-weight: 900; cursor: pointer; text-transform: uppercase; transition: 0.3s; box-shadow: 0 8px 20px rgba(251, 191, 36, 0.3); }
+
+        /* STATUS BAR */
+        .top-nav { width: 100%; background: #000; padding: 15px 0; display: flex; justify-content: center; gap: 20px; border-bottom: 1px solid #222; position: sticky; top: 0; z-index: 99; }
+        .stat-item { display: flex; align-items: center; gap: 6px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; }
         .stat-item span { color: var(--primary); }
 
-        /* CONTENIDO PRINCIPAL */
-        #app-content { display: none; width: 90%; max-width: 450px; margin: 30px auto; animation: fadeIn 0.8s ease; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        /* APP CONTENT */
+        #app-content { display: none; width: 90%; max-width: 450px; margin: 25px auto; animation: fadeIn 0.6s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        .visual-frame { width: 100%; aspect-ratio: 16/9; background: #000; border-radius: 30px; margin-bottom: 25px; overflow: hidden; border: 1px solid #333; box-shadow: 0 20px 40px rgba(0,0,0,0.6); position: relative; }
+        .visual-frame { width: 100%; aspect-ratio: 16/9; background: #000; border-radius: 25px; margin-bottom: 20px; overflow: hidden; border: 1px solid #333; position: relative; }
         .visual-frame img { width: 100%; height: 100%; object-fit: cover; }
         
-        .lesson-info { background: var(--card); border-radius: 35px; padding: 30px; border: 1px solid #222; }
-        .day-tag { color: var(--primary); font-size: 0.7rem; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; }
-        
-        /* TAREAS ANIMADAS */
-        .task-list { margin-top: 20px; }
-        .task { background: #0a0c12; padding: 20px; border-radius: 20px; border: 1px solid #1a1f2e; margin-bottom: 12px; transition: 0.3s; cursor: pointer; }
-        .task.completed { border-left: 5px solid var(--primary); background: #0e121a; }
-        .task b { display: block; color: var(--primary); font-size: 0.8rem; margin-bottom: 5px; text-transform: uppercase; }
-        .task p { margin: 0; font-size: 0.9rem; color: #94a3b8; line-height: 1.4; }
+        .lesson-info { background: var(--card); border-radius: 30px; padding: 25px; border: 1px solid #222; }
+        .task { background: #07090f; padding: 18px; border-radius: 18px; border: 1px solid #1a1f2e; margin-top: 10px; }
+        .task b { color: var(--primary); font-size: 0.75rem; text-transform: uppercase; display: block; margin-bottom: 4px; }
+        .task p { margin: 0; font-size: 0.85rem; color: #94a3b8; }
 
-        /* NAV BAR */
+        /* BOTONES ABAJO */
         .bottom-nav { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 400px; display: flex; gap: 10px; z-index: 100; }
-        .btn-action { flex: 1; padding: 18px; border-radius: 18px; border: none; font-weight: 800; cursor: pointer; transition: 0.3s; }
+        .btn-action { flex: 1; padding: 16px; border-radius: 15px; border: none; font-weight: 800; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -61,7 +54,7 @@
     <div class="hero-sub">The 1% Elite Method</div>
     <div class="login-box">
         <input type="text" id="pass-input" placeholder="PASSCODE">
-        <button class="btn-glow" onclick="login()">START SESSION</button>
+        <button class="btn-glow" onclick="login()">ENTER TRAINING</button>
     </div>
 </div>
 
@@ -72,24 +65,26 @@
 </div>
 
 <div id="app-content">
-    <div class="visual-frame"><img id="stage-img" src="" alt="Session"></div>
+    <div class="visual-frame"><img id="stage-img" src="" alt="Training"></div>
     <div class="lesson-info">
-        <span class="day-tag" id="day-display">DAY 01</span>
-        <h2 id="title-display" style="margin: 10px 0 20px 0; font-family: 'Syncopate'; font-size: 1.2rem;"></h2>
-        <div class="task-list" id="task-list"></div>
+        <span id="day-display" style="color: var(--primary); font-weight: 900; font-size: 0.7rem; letter-spacing: 2px;">DAY 01</span>
+        <h2 id="title-display" style="margin: 10px 0; font-family: 'Syncopate'; font-size: 1.1rem;"></h2>
+        <div id="task-list"></div>
     </div>
 </div>
 
 <div class="bottom-nav" id="bottom-nav" style="display: none;">
-    <button class="btn-action" style="background: #1a1f2e; color: white;" onclick="move(-1)">BACK</button>
+    <button class="btn-action" style="background: #222; color: white;" onclick="move(-1)">BACK</button>
     <button class="btn-action btn-glow" id="next-btn" onclick="move(1)">NEXT STEP</button>
 </div>
 
 <script>
     const ACCESS = "GUITARRA1";
-    // CAMBIA EL TIEMPO EN EL SIGUIENTE VALOR (EN SEGUNDOS):
-    const TIEMPO_BLOQUEO = 0; 
     
+    // --- AQUÍ CONTROLAS EL TIEMPO EN SEGUNDOS ---
+    const TIEMPO_ESPERA = 0; 
+    // --------------------------------------------
+
     let currentDay = parseInt(localStorage.getItem('jg_day')) || 0;
     let xp = parseInt(localStorage.getItem('jg_xp')) || 0;
     let timer;
@@ -105,12 +100,11 @@
         { t: "La Menor: Melancolía", i: "https://images.unsplash.com/photo-1558556405-3071bd8d3ee6?w=800", steps: [{h: "Transformación", p: "Es igual que Mi Mayor pero bajando cada dedo una cuerda."}, {h: "Oído", p: "Nota como el sonido se vuelve triste y profundo."}] },
         { t: "Mi Menor: El Vacío", i: "https://images.unsplash.com/photo-1510915361894-db8b60106cb1?w=800", steps: [{h: "Minimalismo", p: "Solo dos dedos en el traste 2 cuerdas 5 y 4."}, {h: "Práctica", p: "Cambia de Mi Mayor a Mi Menor levantando solo el dedo índice."}] },
         { t: "Re Menor: Tensión", i: "https://images.unsplash.com/photo-1550291652-6ea9114a47b1?w=800", steps: [{h: "Punta de dedo", p: "D1 en el traste 1 de la primera cuerda. Muy preciso."}, {h: "Rasgueo", p: "Solo cuerdas agudas para un sonido brillante y triste."}] }
-        // Se autocompletarán los 30 días para que el código no falle.
     ];
 
-    // Llenado de base de datos para asegurar 30 días únicos
+    // Completar hasta 30 días
     for(let i=10; i<30; i++) {
-        database.push({ t: `Fase Avanzada #${i+1}`, i: "https://images.unsplash.com/photo-1550291652-6ea9114a47b1?w=800", steps: [{h: "Técnica Pro", p: "Mantén el ritmo por 5 minutos sin mirar el mástil."}, {h: "Oído", p: "Identifica la nota más grave del acorde."}] });
+        database.push({ t: `Técnica Nivel ${i+1}`, i: "https://images.unsplash.com/photo-1550291652-6ea9114a47b1?w=800", steps: [{h: "Enfoque", p: "Repite el cambio de acorde 20 veces sin mirar la mano."}, {h: "Desafío", p: "Intenta que todas las cuerdas suenen cristalinas."}] });
     }
 
     function login() {
@@ -121,20 +115,27 @@
             document.getElementById('top-nav').style.display = 'flex';
             checkStreak();
             updateUI();
-        }
+        } else { alert("PASSCODE INCORRECTO"); }
     }
 
     function checkStreak() {
-        const last = localStorage.getItem('jg_last');
-        const now = new Date().toDateString();
-        let s = parseInt(localStorage.getItem('jg_s')) || 0;
+        const last = localStorage.getItem('jg_last_date');
+        const today = new Date().toDateString();
+        let s = parseInt(localStorage.getItem('jg_streak_val')) || 0;
 
-        if(last !== now) {
-            if(last === new Date(Date.now()-86400000).toDateString()) s++;
-            else s = 1;
-            localStorage.setItem('jg_last', now);
-            localStorage.setItem('jg_s', s);
+        if(!last) { 
+            s = 1; 
+        } else if(last !== today) {
+            const yesterday = new Date();
+            yesterday.setDate(yesterday.getDate() - 1);
+            if(last === yesterday.toDateString()) {
+                s++; 
+            } else {
+                s = 1; 
+            }
         }
+        localStorage.setItem('jg_last_date', today);
+        localStorage.setItem('jg_streak_val', s);
         document.getElementById('streak-num').innerText = s;
     }
 
@@ -150,44 +151,47 @@
             const div = document.createElement('div');
             div.className = "task";
             div.innerHTML = `<b>${s.h}</b><p>${s.p}</p>`;
-            div.onclick = () => div.classList.toggle('completed');
             list.appendChild(div);
         });
 
         document.getElementById('xp-num').innerText = xp;
-        document.getElementById('rank-name').innerText = xp > 2000 ? "MASTER" : xp > 500 ? "SOLOIST" : "NOVICE";
+        document.getElementById('rank-name').innerText = xp > 1500 ? "SOLOIST" : xp > 500 ? "APPRENTICE" : "NOVICE";
         
         startTimer();
     }
 
     function startTimer() {
         const btn = document.getElementById('next-btn');
-        let t = TIEMPO_BLOQUEO;
-        btn.disabled = t > 0;
-
-        clearInterval(timer);
+        let t = TIEMPO_ESPERA;
+        
         if(t > 0) {
+            btn.disabled = true;
+            clearInterval(timer);
             timer = setInterval(() => {
                 t--;
                 btn.innerText = `PRACTICING... ${t}s`;
                 if(t <= 0) {
                     clearInterval(timer);
                     btn.disabled = false;
-                    btn.innerText = "COMPLETE SESSION";
-                    xp += 50;
-                    localStorage.setItem('jg_xp', xp);
+                    btn.innerText = "COMPLETE STEP";
                 }
             }, 1000);
         } else {
-            btn.innerText = "COMPLETE SESSION";
+            btn.disabled = false;
+            btn.innerText = "COMPLETE STEP";
         }
     }
 
     function move(dir) {
         if(currentDay + dir >= 0 && currentDay + dir < 30) {
+            if(dir === 1) { // Si avanza, gana XP
+                xp += 100;
+                localStorage.setItem('jg_xp', xp);
+            }
             currentDay += dir;
             localStorage.setItem('jg_day', currentDay);
             updateUI();
+            window.scrollTo(0,0);
         }
     }
 </script>
