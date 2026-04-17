@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jose Guitar | Elite Vertical</title>
+    <title>Jose Guitar | Elite Academy</title>
     <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Inter:wght@400;900&display=swap" rel="stylesheet">
     <style>
         :root { --primary: #fbbf24; --bg: #05070a; --card: #10141d; --text: #ffffff; }
-        body { font-family: 'Inter', sans-serif; background-color: var(--bg); color: var(--text); margin: 0; padding-bottom: 180px; overflow-x: hidden; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg); color: var(--text); margin: 0; padding-bottom: 160px; overflow-x: hidden; }
         
         /* PORTADA */
         #auth-screen { 
@@ -15,46 +15,35 @@
             background: linear-gradient(rgba(0,0,0,0.3) 0%, rgba(5,7,10,0.9) 80%), url('portada.JPG') center/cover no-repeat;
             text-align: center;
         }
-        .login-box { background: rgba(0,0,0,0.7); padding: 30px; border-radius: 30px; border: 1px solid rgba(251,191,36,0.3); backdrop-filter: blur(8px); width: 80%; max-width: 300px; }
+        .login-box { background: rgba(0,0,0,0.7); padding: 30px; border-radius: 30px; border: 1px solid rgba(251,191,36,0.3); backdrop-filter: blur(10px); width: 85%; max-width: 320px; }
 
         /* NAV */
         .top-nav { width: 100%; background: #000; padding: 15px 0; display: none; justify-content: center; gap: 20px; border-bottom: 1px solid #222; position: sticky; top: 0; z-index: 99; }
         
         #app-content { display: none; width: 95%; max-width: 450px; margin: 20px auto; }
 
-        /* MÁSTIL VERTICAL - FIX DE DESBORDE */
-        .fretboard-card { background: var(--card); border-radius: 25px; padding: 40px 10px 20px 10px; margin-bottom: 20px; border: 1px solid #222; display: flex; flex-direction: column; align-items: center; }
-        
+        /* MÁSTIL VERTICAL */
+        .fretboard-card { background: var(--card); border-radius: 25px; padding: 30px 10px; margin-bottom: 20px; border: 1px solid #222; display: flex; flex-direction: column; align-items: center; }
         .fretboard-vertical { 
-            width: 200px; height: 300px; background: #1a1a1a; 
-            position: relative; border-top: 8px solid #ddd; 
-            display: flex; justify-content: space-between; padding: 0 10px;
-            overflow: hidden; /* ESTO EVITA QUE LOS TRASTES SE SALGAN */
-            border-bottom: 2px solid #333;
+            width: 180px; height: 280px; background: #1a1a1a; position: relative; border-top: 8px solid #ddd; 
+            display: flex; justify-content: space-between; padding: 0 10px; overflow: hidden; border-bottom: 2px solid #333;
         }
-
-        /* Trastes: ahora contenidos dentro del padre */
-        .fret-line { position: absolute; left: 0; width: 100%; height: 2px; background: #444; z-index: 1; }
-        .fl-1 { top: 75px; } .fl-2 { top: 150px; } .fl-3 { top: 225px; } .fl-4 { top: 298px; }
-
-        .string-v { width: 2px; background: linear-gradient(to right, #444, #777, #444); height: 100%; position: relative; z-index: 2; }
-        
+        .fret-line { position: absolute; left: 0; width: 100%; height: 2px; background: #333; z-index: 1; }
+        .fl-1 { top: 70px; } .fl-2 { top: 140px; } .fl-3 { top: 210px; } .fl-4 { top: 278px; }
+        .string-v { width: 2px; background: #444; height: 100%; position: relative; z-index: 2; }
         .finger { 
-            width: 26px; height: 26px; background: var(--primary); border-radius: 50%; 
-            position: absolute; left: 50%; transform: translate(-50%, -50%); 
-            z-index: 10; display: flex; align-items: center; justify-content: center;
-            color: #000; font-size: 11px; font-weight: 900; box-shadow: 0 0 15px var(--primary);
+            width: 24px; height: 24px; background: var(--primary); border-radius: 50%; position: absolute; left: 50%; transform: translate(-50%, -50%); 
+            z-index: 10; display: flex; align-items: center; justify-content: center; color: #000; font-size: 11px; font-weight: 900; box-shadow: 0 0 12px var(--primary);
         }
-        
-        .status-mark { position: absolute; top: -30px; left: 50%; transform: translateX(-50%); font-weight: 900; font-size: 14px; }
+        .status-mark { position: absolute; top: -25px; left: 50%; transform: translateX(-50%); font-weight: 900; font-size: 14px; }
 
-        /* TEXTOS */
-        .info-box { background: var(--card); border-radius: 20px; padding: 20px; border: 1px solid #222; margin-top: 20px; min-height: 200px; }
-        .tab-box { font-family: 'Courier New', monospace; background: #000; padding: 15px; border-radius: 10px; color: var(--primary); white-space: pre; margin: 10px 0; font-size: 14px; border: 1px solid #111; overflow-x: auto; }
+        /* CONTENEDORES DE TEXTO */
+        .info-box { background: var(--card); border-radius: 20px; padding: 25px; border: 1px solid #222; line-height: 1.5; }
+        .guide-box { background: #000; border: 2px dashed var(--primary); padding: 15px; border-radius: 15px; margin: 15px 0; color: var(--primary); font-weight: 700; text-align: center; }
+        .tab-box { font-family: 'Courier New', monospace; background: #000; padding: 15px; border-radius: 10px; color: #888; white-space: pre; font-size: 14px; border: 1px solid #111; overflow-x: auto; }
 
-        .btn-main { background: var(--primary); color: #000; border: none; padding: 20px; border-radius: 15px; font-weight: 900; width: 100%; cursor: pointer; text-transform: uppercase; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
-        .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: linear-gradient(transparent, var(--bg) 40%); padding: 30px 0; display: none; z-index: 100; text-align: center; }
-        .btn-container { width: 90%; max-width: 400px; margin: 0 auto; }
+        .btn-main { background: var(--primary); color: #000; border: none; padding: 20px; border-radius: 15px; font-weight: 900; width: 100%; cursor: pointer; text-transform: uppercase; }
+        .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: linear-gradient(transparent, var(--bg) 50%); padding: 40px 0 20px; display: none; z-index: 100; }
     </style>
 </head>
 <body>
@@ -62,43 +51,41 @@
 <div id="auth-screen">
     <div class="hero-logo">JOSE GUITAR</div>
     <div class="login-box">
-        <input type="password" id="pass-input" placeholder="PASSCODE" style="width:100%; padding:15px; border-radius:10px; border:none; background:#111; color:white; text-align:center; margin-bottom:15px; box-sizing:border-box;">
-        <button class="btn-main" onclick="login()">ACCEDER AL ELITE</button>
+        <input type="password" id="pass-input" placeholder="PASSCODE" style="width:100%; padding:15px; border-radius:12px; border:none; background:#111; color:white; text-align:center; margin-bottom:15px; box-sizing:border-box;">
+        <button class="btn-main" onclick="login()">INGRESAR</button>
     </div>
 </div>
 
 <div class="top-nav" id="top-nav">
     <div style="font-size: 0.8rem; font-weight: 900;">DÍA <span id="day-num">1</span></div>
-    <div style="font-size: 0.7rem; color: var(--primary); font-family:'Syncopate'">TRAINING MODE</div>
+    <div style="font-size: 0.7rem; color: var(--primary); font-family:'Syncopate'">LEVEL: ELITE</div>
 </div>
 
 <div id="app-content">
-    <div id="vid-container" style="width:100%; aspect-ratio:16/9; background:#000; border-radius:20px; overflow:hidden; border:1px solid #333; margin-bottom:20px;">
+    <div style="width:100%; aspect-ratio:16/9; background:#000; border-radius:20px; overflow:hidden; border:1px solid #333; margin-bottom:20px;">
         <iframe id="vid-frame" src="" style="width:100%; height:100%; border:none;" allowfullscreen></iframe>
     </div>
 
-    <div class="fretboard-card">
-        <h2 id="chord-name" style="margin: 0 0 25px 0; font-family: 'Syncopate'; font-size: 1.1rem; color: var(--primary);">---</h2>
+    <div id="mastro-container" class="fretboard-card">
+        <h2 id="chord-name" style="margin: 0 0 20px 0; font-family: 'Syncopate'; font-size: 1.1rem; color: var(--primary);">---</h2>
         <div class="fretboard-vertical">
             <div class="fret-line fl-1"></div><div class="fret-line fl-2"></div><div class="fret-line fl-3"></div><div class="fret-line fl-4"></div>
             <div class="string-v" id="str0"></div><div class="string-v" id="str1"></div><div class="string-v" id="str2"></div>
             <div class="string-v" id="str3"></div><div class="string-v" id="str4"></div><div class="string-v" id="str5"></div>
         </div>
-        <div style="display:flex; justify-content:space-between; width:200px; margin-top:10px; color:#444; font-size:10px; font-weight:900;">
-            <span>E</span><span>A</span><span>D</span><span>G</span><span>B</span><span>E</span>
-        </div>
     </div>
 
     <div class="info-box">
-        <h3 id="lesson-title" style="margin:0; font-size:1.1rem; color:var(--primary);"></h3>
-        <p id="lesson-desc" style="font-size:0.9rem; opacity:0.8; margin:15px 0; line-height:1.4;"></p>
+        <h3 id="lesson-title" style="margin:0; font-size:1.2rem; color:var(--primary);"></h3>
+        <div id="extra-guide"></div>
+        <p id="lesson-desc" style="font-size:0.95rem; opacity:0.8; margin:15px 0;"></p>
         <div class="tab-box" id="tab-data"></div>
     </div>
 </div>
 
 <div class="bottom-nav" id="bottom-nav">
-    <div class="btn-container">
-        <button class="btn-main" onclick="nextDay()">SIGUIENTE LECCIÓN ✓</button>
+    <div style="width: 90%; max-width: 400px; margin: 0 auto;">
+        <button class="btn-main" onclick="nextDay()">SIGUIENTE PASO ✓</button>
     </div>
 </div>
 
@@ -106,31 +93,50 @@
     const CLAVE = "GUITARRA1";
     let currentDay = 0;
 
-    // BASE DE DATOS COMPLETA
-    const curso = [
-        { name: "Do Mayor (C)", chord: "Acorde C", pattern: ["X", 3, 2, 0, 1, 0], desc: "Día 1: El pilar de la armonía. Asegúrate de arquear bien los dedos para no mutear las cuerdas al aire.", tab: "E|--0--\nB|--1--\nG|--0--\nD|--2--\nA|--3--\nE|--X--" },
-        { name: "Sol Mayor (G)", chord: "Acorde G", pattern: [3, 2, 0, 0, 3, 3], desc: "Día 2: El acorde más usado en el Rock. Usa tus dedos 3 y 4 en las cuerdas agudas para un sonido moderno.", tab: "E|--3--\nB|--3--\nG|--0--\nD|--0--\nA|--2--\nE|--3--" }
+    // ORDENACIÓN POR ESCALA: C, D, E, F, G, A, B
+    const acordesBase = [
+        // MAYORES (1-7)
+        { t: "Do Mayor (C)", n: "C", p: ["X", 3, 2, 0, 1, 0], d: "El acorde base para entender la armonía.", b: "E|--0--\nB|--1--\nG|--0--\nD|--2--\nA|--3--\nE|--X--" },
+        { t: "Re Mayor (D)", n: "D", p: ["X", "X", 0, 2, 3, 2], d: "Ideal para canciones brillantes. Evita tocar la 5ta y 6ta cuerda.", b: "E|--2--\nB|--3--\nG|--2--\nD|--0--" },
+        { t: "Mi Mayor (E)", n: "E", p: [0, 2, 2, 1, 0, 0], d: "Poderoso y profundo. Usa todas las cuerdas.", b: "Todas las cuerdas suenan." },
+        { t: "Fa Mayor (F)", n: "F", p: [1, 3, 3, 2, 1, 1], d: "Tu primera cejilla. Presiona firme con el índice.", b: "Cejilla en Traste 1" },
+        { t: "Sol Mayor (G)", n: "G", p: [3, 2, 0, 0, 3, 3], d: "Versión de 4 dedos para mayor brillo.", b: "E|--3--\nB|--3--" },
+        { t: "La Mayor (A)", n: "A", p: ["X", 0, 2, 2, 2, 0], d: "Tres dedos en el mismo traste. No pises las cuerdas vecinas.", b: "Traste 2: cuerdas 2,3,4" },
+        { t: "Si Mayor (B)", n: "B", p: ["X", 2, 4, 4, 4, 2], d: "Cejilla en el traste 2. Paciencia con este.", b: "Forma de A con cejilla." },
+        
+        // MENORES (8-14)
+        { t: "Do Menor (Cm)", n: "Cm", p: ["X", 3, 5, 5, 4, 3], d: "Cejilla en traste 3.", b: "Traste 3" },
+        { t: "Re Menor (Dm)", n: "Dm", p: ["X", "X", 0, 2, 3, 1], d: "Triste y melancólico.", b: "E|--1--" },
+        { t: "Mi Menor (Em)", n: "Em", p: [0, 2, 2, 0, 0, 0], d: "Solo dos dedos. El más fácil y usado.", b: "Dedos 2 y 3." },
+        { t: "Fa Menor (Fm)", n: "Fm", p: [1, 3, 3, 1, 1, 1], d: "Igual al Fa mayor pero quita el dedo medio.", b: "Cejilla completa." },
+        { t: "Sol Menor (Gm)", n: "Gm", p: [3, 5, 5, 3, 3, 3], d: "Cejilla en traste 3.", b: "Fuerza en el índice." },
+        { t: "La Menor (Am)", n: "Am", p: ["X", 0, 2, 2, 1, 0], d: "Base de muchísimas baladas.", b: "Similar al Mi mayor." },
+        { t: "Si Menor (Bm)", n: "Bm", p: ["X", 2, 4, 4, 3, 2], d: "El menor con cejilla más importante.", b: "Traste 2." },
+
+        // SEPTIMOS (15-21)
+        { t: "Do Séptima (C7)", n: "C7", p: ["X", 3, 2, 3, 1, 0], d: "Añade el meñique en la cuerda 3.", b: "Sonido Blues." },
+        { t: "Re Séptima (D7)", n: "D7", p: ["X", "X", 0, 2, 1, 2], d: "Triángulo invertido.", b: "E|--2--\nB|--1--" },
+        { t: "Mi Séptima (E7)", n: "E7", p: [0, 2, 0, 1, 0, 0], d: "Quita un dedo del Mi mayor.", b: "Tensión pura." },
+        { t: "Fa Séptima (F7)", n: "F7", p: [1, 3, 1, 2, 1, 1], d: "Cejilla con tensión.", b: "Traste 1." },
+        { t: "Sol Séptima (G7)", n: "G7", p: [3, 2, 0, 0, 0, 1], d: "Acorde de salida dominante.", b: "E|--1--" },
+        { t: "La Séptima (A7)", n: "A7", p: ["X", 0, 2, 0, 2, 0], d: "Solo dos dedos con espacio en medio.", b: "Cuerdas 2 y 4." },
+        { t: "Si Séptima (B7)", n: "B7", p: ["X", 2, 1, 2, 0, 2], d: "Acorde de posición abierta avanzado.", b: "A7 con cejilla." }
     ];
 
-    // Rellenar hasta el 21 con placeholder (luego tú pones los reales)
-    for(let i=curso.length; i<21; i++) {
-        curso.push({ name: `Acorde Pro Nivel ${i+1}`, chord: "Aprendizaje", pattern: ["X", 0, 2, 2, 1, 0], desc: "Sigue perfeccionando tu técnica de presión y claridad.", tab: "Sigue el video para la posición exacta." });
-    }
-
-    // DÍAS 22-30: RITMOS Y APLICACIÓN
-    const extras = [
-        { name: "Ritmo Rock 'Eléctrico'", chord: "Mano Derecha", pattern: [null, null, null, null, null, null], desc: "Practica el rasgueo constante: ABAJO, ABAJO, ARRIBA, ARRIBA, ABAJO. Mantén la muñeca relajada.", tab: "D - D - U - U - D\n(Pulsos: 1, 2, &, &, 4)" },
-        { name: "La Progresión Mágica", chord: "G - D - Em - C", pattern: [3, 2, 0, 0, 3, 3], desc: "Toca estos 4 acordes en orden. Son la base de miles de canciones famosas.", tab: "4 tiempos por acorde.\nNo detengas el ritmo al cambiar." },
-        { name: "Balada y Arpegio", chord: "P-I-M-A", pattern: ["X", 0, 2, 2, 1, 0], desc: "Toca las cuerdas una por una. El pulgar toca la cuerda 5, el índice la 3, medio la 2 y anular la 1.", tab: "Orden: 5 - 3 - 2 - 1\nSuave y constante." },
-        { name: "Ritmo de Blues", chord: "Shuffle", pattern: ["X", 0, 2, 2, 2, 0], desc: "Aprende el ritmo 'atropellado' del blues. Toca con un pequeño acento en el segundo golpe.", tab: "A7 -> D7 -> E7\nSiente el Groove." },
-        { name: "El 'Palm Mute'", chord: "Técnica Pro", pattern: [3, 5, 5, null, null, null], desc: "Apoya el lateral de tu mano derecha sobre las cuerdas cerca del puente para un sonido percusivo.", tab: "Ideal para Rock y Metal.\nSonido sordo y potente." },
-        { name: "Agilidad: El Salto", chord: "C a G", pattern: ["X", 3, 2, 0, 1, 0], desc: "Practica el cambio entre Do y Sol 50 veces. Es el cambio más difícil para principiantes.", tab: "C <---> G\nObjetivo: < 1 segundo." },
-        { name: "Escala de Agilidad", chord: "1-2-3-4", pattern: [1, 2, 3, 4, null, null], desc: "Ejercicio de independencia: un dedo por traste sin levantar los anteriores.", tab: "Cuerda 6: 1-2-3-4\nCuerda 5: 1-2-3-4..." },
-        { name: "Canción: Hallelujah", chord: "C - Am - F", pattern: ["X", 3, 2, 0, 1, 0], desc: "Combina lo aprendido. Usa el arpegio del día 24 sobre esta progresión.", tab: "C - Am - F - G\nRitmo lento y sentido." },
-        { name: "ELITE GRADUATION", chord: "THE 1%", pattern: [null, null, null, null, null, null], desc: "¡Felicidades! Has completado los 30 días. Tu misión: grabar un video tocando tu progresión favorita.", tab: "¡NOS VEMOS EN EL ESCENARIO!" }
+    // DÍAS 22-30: GUÍAS RÍTMICAS (SIN MÁSTIL)
+    const ideasProgresivas = [
+        { t: "Ritmo Rock 4/4", n: "GUÍA RÍTMICA", d: "Aprende el movimiento básico. Mantén la mano como un péndulo.", g: "ABAJO - ABAJO - ARRIBA - ARRIBA - ABAJO", b: "1  2  &  &  4" },
+        { t: "Cambio de Precisión", n: "PROGRESIÓN G-D", d: "Alterna entre Sol y Re cada dos pulsos. No detengas el rasgueo.", g: "G [↓↓] - D [↓↓]", b: "Objetivo: Cero silencio entre cambios." },
+        { t: "La Progresión Pop", n: "C - G - Am - F", d: "Toca 4 veces cada acorde con el ritmo del Día 22.", g: "C > G > Am > F", b: "La base de 1000 canciones." },
+        { t: "Arpegio de Balada", n: "TÉCNICA P-I-M-A", d: "Usa los dedos individualmente. Pulgar para bajos, resto para agudas.", g: "Pulgar - Indice - Medio - Anular", b: "Suave y constante." },
+        { t: "Ritmo de Blues Shuffle", n: "EL SWING", d: "Ritmo ternario. Imagina un caballo galopando.", g: "Daa-da / Daa-da / Daa-da", b: "Acentúa el segundo golpe." },
+        { t: "Palm Mute (Apagado)", n: "ROCK STYLE", d: "Apoya la mano derecha en el puente. Sonido percusivo.", g: "Mute - Mute - Abierto", b: "Usa distorsión si tienes." },
+        { t: "Independencia de Dedos", n: "EJERCICIO FÍSICO", d: "Sube y baja por las cuerdas. 1 dedo por traste.", g: "1 - 2 - 3 - 4", b: "No levantes los dedos previos." },
+        { t: "Balada Hallelujah", n: "CANCIÓN FINAL", d: "Combina arpegio y cambios. C, Am, F, G.", g: "C - Am - C - Am - F - G", b: "Siente la melodía." },
+        { t: "GRADUACIÓN ELITE", n: "MAESTRÍA", d: "¡Felicidades! Has completado el ciclo. Crea tu propia secuencia.", g: "LIBERTAD TOTAL", b: "¡ERES GUITARRISTA!" }
     ];
 
-    const plan = [...curso, ...extras];
+    const planGlobal = [...acordesBase, ...ideasProgresivas];
 
     function drawChord(p) {
         document.querySelectorAll('.finger, .status-mark').forEach(e => e.remove());
@@ -139,20 +145,33 @@
             if (val === "X") str.innerHTML += `<span class="status-mark" style="color:#ff4444">X</span>`;
             else if (val === 0) str.innerHTML += `<span class="status-mark" style="color:var(--primary)">O</span>`;
             else if (typeof val === 'number') {
-                const topPos = (val * 75) - 37;
+                const topPos = (val * 70) - 35;
                 str.innerHTML += `<div class="finger" style="top:${topPos}px">${val}</div>`;
             }
         });
     }
 
     function render() {
-        const d = plan[currentDay];
+        const d = planGlobal[currentDay];
         document.getElementById('day-num').innerText = currentDay + 1;
-        document.getElementById('chord-name').innerText = d.chord;
-        document.getElementById('lesson-title').innerText = d.name;
-        document.getElementById('lesson-desc').innerText = d.desc;
-        document.getElementById('tab-data').innerText = d.tab;
-        drawChord(d.pattern);
+        document.getElementById('lesson-title').innerText = d.t;
+        document.getElementById('lesson-desc').innerText = d.d;
+        document.getElementById('tab-data').innerText = d.b;
+
+        // LÓGICA DE VISIBILIDAD
+        const mastil = document.getElementById('mastro-container');
+        const extra = document.getElementById('extra-guide');
+
+        if(currentDay < 21) {
+            mastil.style.display = 'flex';
+            extra.innerHTML = "";
+            document.getElementById('chord-name').innerText = d.n;
+            drawChord(d.p);
+        } else {
+            mastil.style.display = 'none';
+            extra.innerHTML = `<div class="guide-box">${d.g}</div>`;
+        }
+        
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
@@ -167,7 +186,7 @@
     }
 
     function nextDay() {
-        if(currentDay < plan.length - 1) {
+        if(currentDay < planGlobal.length - 1) {
             currentDay++;
             render();
         }
