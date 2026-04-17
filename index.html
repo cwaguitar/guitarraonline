@@ -6,72 +6,60 @@
     <title>Jose Guitar | Elite Training</title>
     <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Inter:wght@300;600;900&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #fbbf24; --bg: #05070a; --card: #10141d; --text: #ffffff; --fret: #2a2a2a; }
-        body { font-family: 'Inter', sans-serif; background-color: var(--bg); color: var(--text); margin: 0; padding-bottom: 150px; overflow-x: hidden; scroll-behavior: smooth; }
+        :root { --primary: #fbbf24; --bg: #05070a; --card: #10141d; --text: #ffffff; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg); color: var(--text); margin: 0; padding-bottom: 150px; overflow-x: hidden; }
         
         /* PORTADA */
         #auth-screen { 
-            height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: space-between;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.4), var(--bg)), url('portada.JPG') center/cover;
-            text-align: center; padding: 40px 20px; box-sizing: border-box;
+            height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.9)), url('portada.JPG') center/cover;
+            text-align: center; padding: 20px; box-sizing: border-box;
         }
 
-        .hero-logo { font-family: 'Syncopate', sans-serif; font-size: 2.2rem; color: var(--primary); text-shadow: 0 0 20px rgba(251, 191, 36, 0.5); }
-        .hero-sub { text-transform: uppercase; letter-spacing: 4px; font-size: 0.65rem; opacity: 0.8; }
-        
-        .login-box { 
-            background: rgba(0, 0, 0, 0.8); padding: 30px; border-radius: 35px; border: 1px solid rgba(251, 191, 36, 0.2);
-            backdrop-filter: blur(15px); width: 100%; max-width: 300px;
-        }
+        .hero-logo { font-family: 'Syncopate', sans-serif; font-size: 2.2rem; color: var(--primary); margin-bottom: 10px; }
+        .login-box { background: rgba(0,0,0,0.8); padding: 30px; border-radius: 30px; border: 1px solid rgba(251,191,36,0.2); width: 100%; max-width: 300px; }
+        input { width: 100%; padding: 15px; background: #111; border: 1px solid #333; color: white; border-radius: 12px; margin-bottom: 15px; text-align: center; box-sizing: border-box; }
 
-        input { width: 85%; padding: 16px; background: #111; border: 1px solid #333; color: white; border-radius: 12px; margin-bottom: 15px; text-align: center; font-family: 'Syncopate'; outline: none; }
-
-        /* NAVEGACIÓN */
-        .top-nav { width: 100%; background: #000; padding: 15px 0; display: flex; justify-content: center; gap: 20px; border-bottom: 1px solid #222; position: sticky; top: 0; z-index: 99; }
+        /* NAV */
+        .top-nav { width: 100%; background: #000; padding: 15px 0; display: none; justify-content: center; gap: 20px; border-bottom: 1px solid #222; position: sticky; top: 0; z-index: 99; }
         .stat-item { font-size: 0.7rem; font-weight: 800; }
-        .stat-item span { color: var(--primary); }
 
+        /* CONTENIDO */
         #app-content { display: none; width: 95%; max-width: 500px; margin: 20px auto; }
 
-        /* SECCIÓN VIDEO */
-        .video-container { width: 100%; aspect-ratio: 16/9; background: #000; border-radius: 20px; overflow: hidden; margin-bottom: 20px; border: 1px solid #333; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        /* VIDEO */
+        .video-container { width: 100%; aspect-ratio: 16/9; background: #000; border-radius: 20px; overflow: hidden; margin-bottom: 20px; border: 1px solid #333; }
         .video-container iframe { width: 100%; height: 100%; border: none; }
 
-        /* MÁSTIL INTERACTIVO */
+        /* MÁSTIL */
         .fretboard-card { background: var(--card); border-radius: 25px; padding: 20px; margin-bottom: 20px; border: 1px solid #222; }
-        .fretboard { display: grid; grid-template-columns: repeat(6, 1fr); background: #1a1a1a; padding: 10px; border-radius: 8px; position: relative; height: 180px; border-left: 4px solid #888; }
-        .string { position: relative; border-right: 1px solid #333; display: flex; flex-direction: column; justify-content: space-around; align-items: center; }
-        .fret-mark { width: 25px; height: 25px; border-radius: 50%; background: transparent; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 900; transition: 0.3s; }
-        .active-note { background: var(--primary); color: #000; box-shadow: 0 0 15px var(--primary); transform: scale(1.1); }
-        .string-label { font-size: 10px; color: #555; margin-bottom: 5px; }
+        .fretboard { display: grid; grid-template-columns: repeat(6, 1fr); background: #1a1a1a; padding: 10px; border-radius: 8px; height: 160px; border-left: 4px solid #888; }
+        .string { display: flex; flex-direction: column; justify-content: space-around; align-items: center; border-right: 1px solid #333; }
+        .fret-mark { width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 9px; color: #444; }
+        .active-note { background: var(--primary); color: #000 !important; box-shadow: 0 0 15px var(--primary); font-weight: 900; }
 
-        /* TABS & TAREAS */
-        .tab-display { font-family: monospace; background: #000; padding: 15px; border-radius: 10px; color: var(--primary); overflow-x: auto; white-space: pre; font-size: 14px; margin: 10px 0; border: 1px solid #222; }
-        .lesson-info { background: var(--card); border-radius: 30px; padding: 25px; border: 1px solid #222; }
-        .task { background: #07090f; padding: 18px; border-radius: 18px; border: 1px solid #1a1f2e; margin-top: 15px; }
-        .task b { color: var(--primary); font-size: 0.7rem; display: block; margin-bottom: 6px; text-transform: uppercase; }
+        /* TABS */
+        .tab-display { font-family: monospace; background: #000; padding: 15px; border-radius: 12px; color: var(--primary); overflow-x: auto; white-space: pre; font-size: 13px; border: 1px solid #222; margin: 10px 0; }
         
-        .btn-glow { background: var(--primary); color: black; border: none; padding: 18px; border-radius: 15px; font-weight: 900; cursor: pointer; text-transform: uppercase; width: 100%; box-shadow: 0 0 20px rgba(251, 191, 36, 0.3); }
-        .bottom-nav { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 400px; z-index: 100; }
+        .lesson-info { background: var(--card); border-radius: 25px; padding: 20px; border: 1px solid #222; }
+        .task { background: #07090f; padding: 15px; border-radius: 15px; border: 1px solid #1a1f2e; margin-top: 10px; }
+        .btn-glow { background: var(--primary); color: #000; border: none; padding: 18px; border-radius: 15px; font-weight: 900; width: 100%; cursor: pointer; }
+        .bottom-nav { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 400px; display: none; }
     </style>
 </head>
 <body>
 
 <div id="auth-screen">
-    <div style="margin-top: 40px;">
-        <div class="hero-logo">JOSE GUITAR</div>
-        <div class="hero-sub">The 1% Elite Method</div>
-    </div>
+    <div class="hero-logo">JOSE GUITAR</div>
     <div class="login-box">
         <input type="text" id="pass-input" placeholder="PASSCODE">
-        <button class="btn-glow" onclick="login()">START TRAINING</button>
+        <button class="btn-glow" onclick="login()">ENTRAR AL ELITE</button>
     </div>
 </div>
 
-<div class="top-nav" id="top-nav" style="display: none;">
-    <div class="stat-item">🔥 <span id="streak-num">0</span> STREAK</div>
+<div class="top-nav" id="top-nav">
+    <div class="stat-item">🔥 DÍA <span id="streak-num">1</span></div>
     <div class="stat-item">⭐ XP <span id="xp-num">0</span></div>
-    <div class="stat-item" style="color: var(--primary);">RANK <span id="rank-name">NOVICE</span></div>
 </div>
 
 <div id="app-content">
@@ -80,170 +68,138 @@
     </div>
 
     <div class="fretboard-card">
-        <span style="font-family: 'Syncopate'; font-size: 0.7rem; color: var(--primary);">DIAGRAMA DE ACORDE: <span id="chord-title">---</span></span>
-        <div class="fretboard" id="fretboard">
-            </div>
+        <span style="font-family: 'Syncopate'; font-size: 0.6rem; color: var(--primary);">DIAGRAMA: <span id="chord-title">Cargando...</span></span>
+        <div class="fretboard" id="fretboard"></div>
     </div>
 
     <div class="lesson-info">
-        <span id="day-display" style="color: var(--primary); font-weight: 900; font-size: 0.7rem; letter-spacing: 2px;">DAY 01</span>
-        <h2 id="title-display" style="margin: 10px 0; font-family: 'Syncopate'; font-size: 1.1rem;"></h2>
+        <span id="day-display" style="color: var(--primary); font-weight: 900; font-size: 0.7rem;">DÍA 01</span>
+        <h2 id="title-display" style="margin: 5px 0; font-family: 'Syncopate'; font-size: 1rem;"></h2>
         
-        <div id="tab-section">
-            <span style="font-size: 0.65rem; color: #64748b; font-weight: 800;">TABLATURA DE LA CANCIÓN:</span>
-            <div class="tab-display" id="tab-content"></div>
-        </div>
-
+        <div class="tab-display" id="tab-content"></div>
         <div id="task-list"></div>
     </div>
 </div>
 
-<div class="bottom-nav" id="bottom-nav" style="display: none;">
-    <button class="btn-glow" id="next-btn" onclick="move(1)">COMPLETE TRAINING</button>
+<div class="bottom-nav" id="bottom-nav">
+    <button class="btn-glow" id="next-btn" onclick="move()">COMPLETAR LECCIÓN</button>
 </div>
 
 <script>
     const ACCESS = "GUITARRA1";
-    const TIEMPO_ESPERA = 300; 
-    let currentDay = parseInt(localStorage.getItem('jg_day')) || 0;
-    let xp = parseInt(localStorage.getItem('jg_xp')) || 0;
-    let timer;
+    const TIEMPO_ESPERA = 0; // PRÁCTICA EN CERO PARA REVISIÓN
+    
+    // Forzamos inicio en 0 para que no salte al 30
+    let currentDay = 0; 
+    let xp = 0;
 
-    // BASE DE DATOS MEJORADA (Videos, Acordes y Tabs)
     const database = [
         { 
-            t: "Tu Primera Canción: 'Clocks'", 
-            v: "https://www.youtube.com/embed/dQw4w9WgXcQ", // Reemplaza con tus IDs de YouTube
-            chordName: "D Major",
-            chordPattern: [null, null, 0, 2, 3, 2], // null=no toca, 0=aire, num=traste
-            tabs: "E|---2---2---2---2---|\nB|---3---3---3---3---|\nG|---2---2---2---2---|\nD|-0---0---0---0-----|\nA|-------------------|\nE|-------------------|",
-            steps: [
-                {h: "La Canción", p: "Toca el ritmo básico de Clocks siguiendo el video.", r: "5 minutos"},
-                {h: "Feedback", p: "Asegúrate de que la 1ra cuerda suene cristalina.", r: "20 veces"}
-            ]
+            t: "Acorde Maestro: Do Mayor", 
+            v: "https://www.youtube.com/embed/dQw4w9WgXcQ", 
+            chordName: "C Major",
+            chordPattern: [null, 3, 2, 0, 1, 0],
+            tabs: "E|---0---|\nB|---1---|\nG|---0---|\nD|---2---|\nA|---3---|\nE|-------|",
+            steps: [{h: "Posición", p: "Cierra los ojos y busca la forma del Do.", r: "10 veces"}]
         },
         { 
-            t: "Poder de Rock: 'Iron Man'", 
-            v: "https://www.youtube.com/embed/ID_DE_TU_VIDEO",
-            chordName: "E5 Power Chord",
-            chordPattern: [0, 2, 2, null, null, null],
-            tabs: "E|----------------------|\nB|----------------------|\nG|----------------------|\nD|--2--5--5/7--7--------|\nA|--2--5--5/7--7--------|\nE|--0--3--3/5--5--------|",
-            steps: [
-                {h: "Riff Maestro", p: "Usa el dedo 1 y 3 para deslizar el acorde de poder.", r: "10 Vueltas"},
-                {h: "Sincronización", p: "Toca encima de la pista original.", r: "Sin errores"}
-            ]
+            t: "Rock Power: Sol Mayor", 
+            v: "https://www.youtube.com/embed/dQw4w9WgXcQ", 
+            chordName: "G Major",
+            chordPattern: [3, 2, 0, 0, 3, 3],
+            tabs: "E|---3---|\nB|---3---|\nG|---0---|\nD|---0---|\nA|---2---|\nE|---3---|",
+            steps: [{h: "Rasgueo", p: "Toca las 6 cuerdas con fuerza.", r: "20 veces"}]
         }
     ];
 
-    // Autogenerador para rellenar
-    for(let i=database.length; i<30; i++) {
-        database.push({
-            t: `Elite Session Vol. ${i+1}`,
-            v: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-            chordName: "Pro Chord " + i,
-            chordPattern: [null, 3, 2, 0, 1, 0],
-            tabs: "E|--0--|\nB|--1--|\nG|--0--|\nD|--2--|\nA|--3--|\nE|-----|",
-            steps: [{h: "Nivel Pro", p: "Domina esta secuencia compleja.", r: "100 Reps"}]
-        });
+    // Rellenar el resto hasta 30 de forma segura
+    if(database.length < 30) {
+        for(let i = database.length; i < 30; i++) {
+            database.push({
+                t: `Lección Elite ${i+1}`,
+                v: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+                chordName: "Acorde de Nivel " + i,
+                chordPattern: [null, null, 0, 2, 3, 2],
+                tabs: "E|---2---|\nB|---3---|\nG|---2---|\nD|---0---|\nA|-------|\nE|-------|",
+                steps: [{h: "Técnica", p: "Sigue el video para esta lección.", r: "5 Min"}]
+            });
+        }
     }
 
     function initFretboard() {
         const board = document.getElementById('fretboard');
         board.innerHTML = "";
-        const notes = ["E", "A", "D", "G", "B", "e"];
-        
-        notes.forEach((note, i) => {
+        for(let s=0; s<6; s++) {
             const str = document.createElement('div');
             str.className = "string";
-            str.innerHTML = `<span class="string-label">${note}</span>`;
-            
-            // Creamos 5 trastes por cuerda
             for(let f=0; f<=4; f++) {
                 const mark = document.createElement('div');
                 mark.className = "fret-mark";
-                mark.id = `s${i}-f${f}`;
+                mark.id = `s${s}-f${f}`;
                 mark.innerText = f === 0 ? "O" : f;
                 str.appendChild(mark);
             }
             board.appendChild(str);
-        });
+        }
     }
 
-    function updateFretboard(pattern) {
-        // Limpiar marcas previas
+    function updateUI() {
+        const d = database[currentDay];
+        document.getElementById('day-display').innerText = `DÍA ${String(currentDay+1).padStart(2,'0')}`;
+        document.getElementById('title-display').innerText = d.t;
+        document.getElementById('lesson-video').src = d.v;
+        document.getElementById('tab-content').innerText = d.tabs;
+        document.getElementById('chord-title').innerText = d.chordName;
+        document.getElementById('streak-num').innerText = currentDay + 1;
+        document.getElementById('xp-num').innerText = xp;
+
+        // Actualizar Mástil
         document.querySelectorAll('.fret-mark').forEach(m => m.classList.remove('active-note'));
-        
-        pattern.forEach((fret, stringIndex) => {
+        d.chordPattern.forEach((fret, sIndex) => {
             if(fret !== null) {
-                const mark = document.getElementById(`s${stringIndex}-f${fret}`);
-                if(mark) mark.classList.add('active-note');
+                const note = document.getElementById(`s${sIndex}-f${fret}`);
+                if(note) note.classList.add('active-note');
             }
         });
+
+        // Tareas
+        const list = document.getElementById('task-list');
+        list.innerHTML = "";
+        d.steps.forEach(s => {
+            const div = document.createElement('div');
+            div.className = "task";
+            div.innerHTML = `<b style="color:var(--primary); font-size:11px;">${s.h}</b><p style="margin:5px 0; font-size:13px; opacity:0.8;">${s.p}</p>`;
+            list.appendChild(div);
+        });
+
+        // Botón con tiempo 0
+        const btn = document.getElementById('next-btn');
+        btn.innerText = "COMPLETAR DÍA " + (currentDay + 1);
+        btn.disabled = false;
     }
 
     function login() {
         if(document.getElementById('pass-input').value.toUpperCase() === ACCESS) {
             document.getElementById('auth-screen').style.display = 'none';
             document.getElementById('app-content').style.display = 'block';
-            document.getElementById('bottom-nav').style.display = 'flex';
+            document.getElementById('bottom-nav').style.display = 'block';
             document.getElementById('top-nav').style.display = 'flex';
             initFretboard();
             updateUI();
         } else { alert("PASSCODE INCORRECTO"); }
     }
 
-    function updateUI() {
-        const d = database[currentDay];
-        document.getElementById('day-display').innerText = `DAY ${String(currentDay+1).padStart(2,'0')}`;
-        document.getElementById('title-display').innerText = d.t;
-        document.getElementById('lesson-video').src = d.v;
-        document.getElementById('tab-content').innerText = d.tabs;
-        document.getElementById('chord-title').innerText = d.chordName;
-        
-        updateFretboard(d.chordPattern);
-
-        document.getElementById('streak-num').innerText = currentDay + 1;
-        document.getElementById('xp-num').innerText = xp;
-        
-        const list = document.getElementById('task-list');
-        list.innerHTML = "";
-        d.steps.forEach(s => {
-            const div = document.createElement('div');
-            div.className = "task";
-            div.innerHTML = `<b>${s.h}</b><p>${s.p}</p><span style="font-size:10px; color:var(--primary)">OBJETIVO: ${s.r}</span>`;
-            list.appendChild(div);
-        });
-
-        startTimer();
-    }
-
-    function startTimer() {
-        const btn = document.getElementById('next-btn');
-        let t = TIEMPO_ESPERA;
-        btn.disabled = true;
-        clearInterval(timer);
-        timer = setInterval(() => {
-            t--;
-            let m = Math.floor(t/60), s = t%60;
-            btn.innerText = `PRACTICANDO: ${m}:${s<10?'0'+s:s}`;
-            if(t <= 0) {
-                clearInterval(timer);
-                btn.disabled = false;
-                btn.innerText = "FINALIZAR DÍA " + (currentDay+1);
-            }
-        }, 1000);
-    }
-
-    function move(dir) {
+    function move() {
         if(currentDay < 29) {
-            xp += 250;
-            localStorage.setItem('jg_xp', xp);
             currentDay++;
-            localStorage.setItem('jg_day', currentDay);
+            xp += 100;
             updateUI();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        } else { alert("MAESTRÍA COMPLETADA."); }
+            window.scrollTo(0,0);
+        } else {
+            alert("¡HAS COMPLETADO EL ENTRENAMIENTO ELITE!");
+        }
     }
 </script>
+
 </body>
 </html>
