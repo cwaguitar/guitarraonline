@@ -1,2 +1,2 @@
-# deporte
-App de ejercicios
+# GUITARRA
+Curso intensivo
