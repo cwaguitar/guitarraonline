@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jose Guitar | Elite Academy 30</title>
+
+  <!-- Fuentes -->
+  <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --primary: #fbbf24;
+      --bg: #05070a;
+      --card: #111827;
+      --text: #ffffff;
+      --success: #10b981;
+      --accent: #3b82f6;
+    }
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    html, body { height: 100%; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 0;
+    }
+
+    /* HEADER / NAVBAR (visible tras login) */
+    .top-nav {
+      width: 100%;
+      background: #000;
+      padding: 14px 20px;
+      display: none; /* se muestra tras login */
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #222;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      gap: 12px;
+    }
+    .progress-bar {
+      height: 6px;
+      background: var(--primary);
+      width: 0%;
+      transition: width 0.25s ease;
+    }
+    .day-label { font-weight: 900; font-size: 0.95rem; }
+
+    /* PORTADA / LOGIN */
+    #auth-screen {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: linear-gradient(rgba(0,0,0,0.6), var(--bg)),
+                  url('portada.JPG') center/cover;
+      padding: 20px;
+    }
+    .login-box {
+      background: rgba(255,255,255,0.05);
+      padding: 30px;
+      border-radius: 24px;
+      border: 1px solid rgba(251,191,36,0.25);
+      backdrop-filter: blur(6px);
+      width: 100%; max-width: 360px;
+    }
+    input {
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 12px;
+      border: 1px solid #333;
+      background: #000;
+      color: #fff;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+    .btn {
+      width: 100%;
+      padding: 14px;
+      border-radius: 12px;
+      border: none;
+      font-weight: 900;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: .4px;
+    }
+    .btn-main { background: var(--primary); color: #000; }
+
+    /* CONTENIDO APP */
+    #app-content { display: none; padding: 20px; max-width: 860px; margin: 0 auto; animation: fadeIn 0.3s ease; }
+    .card { background: var(--card); border-radius: 20px; padding: 22px; border: 1px solid #1f2937; margin-bottom: 16px; box-shadow: 0 8px 28px rgba(0,0,0,.5); }
+
+    /* DIAGRAMA INTERACTIVO (fretboard) */
+    .fretboard { width: 240px; height: 240px; background: #151515; position: relative; margin: 12px auto; border-radius: 10px; }
+    .fretboard .grid {
+      position: absolute; inset: 8px;
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      grid-template-rows: repeat(5, 1fr);
+      gap: 8px;
+      align-items: end;
+      justify-items: center;
+      pointer-events: none;
+    }
+    .dot {
+      width: 22px; height: 22px; background: var(--primary);
+      border-radius: 50%; display: inline-flex; align-items: center; justify-content: center;
+      font-weight: 900; color: #000;
+      box-shadow: 0 2px 6px rgba(0,0,0,.5);
+    }
+    .string-line { position: absolute; left: 0; right: 0; height: 2px; background: #444; }
+    .fret-line { position: absolute; left: 0; right: 0; height: 2px; background: #333; }
+
+    /* NAVEGACIÓN EN MÓDULO */
+    .nav-buttons { position: fixed; bottom: 0; left: 0; width: 100%; 
+                   background: linear-gradient(transparent, var(--bg) 30%); padding: 18px 20px; display: none; gap: 10px; z-index: 100; }
+    .btn-main, .btn-prev {
+      border-radius: 12px; border: none; cursor: pointer; font-weight: 900;
+    }
+    .btn-main { background: var(--primary); color: #000; padding: 14px; flex: 2; text-transform: uppercase; }
+    .btn-prev { background: #374151; color: #fff; padding: 14px; flex: 1; }
+
+    /* RESPONSIVE */
+    @media (max-width: 720px) {
+      .fretboard { width: 200px; height: 200px; }
+      .nav-buttons { padding: 12px; }
+    }
+
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  </style>
+</head>
+<body>
+
+<!-- PANTALLA DE ACCESO -->
+<div id="auth-screen" aria-label="Pantalla de acceso">
+  <div style="font-family:'Syncopate'; font-size:2.2rem; color:var(--primary)">JOSE GUITAR</div>
+  <div style="letter-spacing:4px; font-size:0.75rem; margin-bottom:22px; opacity:.8">INTENSIVO ELITE</div>
+
+  <div class="login-box" role="group" aria-label="Acceso al curso">
+    <input type="password" id="pass-input" placeholder="CÓDIGO DE ACCESO" autocomplete="off" />
+    <button class="btn btn-main" onclick="login()">ENTRAR AL CURSO</button>
+  </div>
+</div>
+
+<!-- CABECERA (visible tras login) -->
+<div class="top-nav" id="top-nav" aria-label="Barra de progreso">
+  <div class="day-label" id="day-label">MÓDULO 0</div>
+  <div style="font-weight:900; color:var(--primary)">🔥 STREAK</div>
+  <div class="progress-bar" id="p-bar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
+
+<!-- CONTENIDO APP -->
+<div id="app-content" aria-label="Contenido de curso"></div>
+
+<!-- NAVEGACIÓN FIJA -->
+<div class="nav-buttons" id="nav-buttons" aria-label="Navegación de lecciones">
+  <button class="btn-prev" id="btn-back" onclick="prevLesson()">Volver</button>
+  <button class="btn-main" onclick="nextLesson()">Continuar ✓</button>
+</div>
+
+<script>
+  // =========================
+  // Configuración y datos
+  // =========================
+
+  const PASS = "GUITARRA1"; // TODO: reemplazar con backend real en producción
+  let currentStep = 0;
+  const TOTAL_STEPS = 5; // número de días/elementos en el MVP
+
+  // Datos del curso (MVP: 5 días; cada día puede tener acordes, técnica o ritmo)
+  // En producción, estos podrían venir de un CMS o API.
+  const curso = [
+    {
+      t: "FUNDAMENTOS ÉLITE",
+      mod: "Módulo 1: Introducción",
+      cat: "intro",
+      d: "Bienvenido al método intensivo. Antes de tocar, recuerda: dedos, diagrama y postura. Comienza con una respiración y una buena base de posturas."
+      // sección... etc
+    },
+    {
+      t: "La Mayor (A)",
+      mod: "Módulo 2: Acordes Mayores",
+      cat: "chord",
+      p: ["X", 0, 2, 2, 2, 0],
+      d: "Acorde mayor versátil. Asegúrate de que la primera cuerda suene clara."
+    },
+    {
+      t: "Digitación 1-2-3-4",
+      mod: "Módulo 3: Técnica",
+      cat: "tech",
+      d: "Ejercicio de independencia de dedos; mantén la presión adecuada sin tensarte."
+    },
+    {
+      t: "La Menor (Am)",
+      mod: "Módulo 4: Acordes Menores",
+      cat: "chord",
+      p: ["X", 0, 2, 2, 1, 0],
+      d: "Acorde Am: forma similar a A, pero un semitono abajo en algunas cuerdas."
+    },
+    {
+      t: "Ritmo Pop/Rock",
+      mod: "Módulo 5: Ritmo",
+      cat: "rhythm",
+      arr: "↓ ↓ ↑ ↑ ↓ ↑",
+      d: "Mantén el brazo derecho como un péndulo. Practica con tempo estable."
+    }
+  ];
+
+  // Clave de almacenamiento local para progreso
+  const STORAGE_KEY = "guitar30_progress_v1";
+
+  // =========================
+  // Lógica de UI y estado
+  // =========================
+
+  // Autenticación mínima
+  function login() {
+    const input = document.getElementById("pass-input").value;
+    if (input && input.trim() === PASS) {
+      // Ocultar pantalla de login, mostrar app
+      document.getElementById("auth-screen").style.display = "none";
+      document.getElementById("top-nav").style.display = "flex";
+      document.getElementById("nav-buttons").style.display = "flex";
+      document.getElementById("app-content").style.display = "block";
+
+      // Cargar progreso y renderizar
+      loadProgress();
+      render();
+    } else {
+      alert("Código incorrecto. Intenta de nuevo.");
+    }
+  }
+
+  // Progreso en local (guardado simple)
+  function getProgress() {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return {};
+    try { return JSON.parse(raw); } catch {
+      return {};
+    }
+  }
+
+  function setProgress(progress) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+  }
+
+  function loadProgress() {
+    const p = getProgress();
+    // Si hay progresos guardados, intenta restaurar la última posición
+    if (p && typeof p.lastIndex === "number") {
+      currentStep = p.lastIndex;
+    }
+  }
+
+  function saveProgress() {
+    const p = {
+      lastIndex: currentStep,
+      completed: Array.from({ length: TOTAL_STEPS }, (_, i) => i < completedCount())
+    };
+    setProgress(p);
+  }
+
+  // Conteo de días completados (ejemplo simple)
+  function completedCount() {
+    const p = getProgress();
+    if (!p.completed) return 0;
+    return p.completed.filter(Boolean).length;
+  }
+
+  // =========================
+  // Renderizado de UI
+  // =========================
+
+  function render() {
+    // Actualizar barra de progreso y etiqueta de día
+    const progreso = Math.min(100, Math.round(((currentStep + 1) / TOTAL_STEPS) * 100));
+    const bar = document.getElementById("p-bar");
+    if (bar) bar.style.width = progreso + "%";
+    const dayLabel = document.getElementById("day-label");
+    if (dayLabel) dayLabel.textContent = `MÓDULO ${currentStep + 1} / ${TOTAL_STEPS}`;
+
+    // Renderizar contenido de la lección actual
+    const content = document.getElementById("app-content");
+    const step = curso[currentStep] || {};
+    let html = `
+      <div class="card" aria-label="Lección actual">
+        <span class="module-tag" style="color:var(--accent); display:inline-block; margin-bottom:8px; font-size:12px; text-transform:uppercase; font-weight:900;">${step.mod || ""}</span>
+        <h2 style="font-family:'Syncopate'; color:var(--primary); margin:0 0 8px 0; font-size:1.5rem;">
+          ${step.t || ""}
+        </h2>
+        <p style="opacity:0.9; line-height:1.6; font-size:0.95rem;">${step.d || ""}</p>
+      </div>
+    `;
+
+    // Acordes (diagrama) si aplica
+    if (step.cat === "chord" && step.p) {
+      html += `
+        <div class="card" style="text-align:center;">
+          <div class="fretboard" aria-label="Diagrama de acordes">
+            <div class="grid" id="chord-grid"></div>
+            <!-- Diagrama renderizado en canvas para mejor visual -->
+            <canvas id="chord-canvas" width="240" height="240" style="width:100%; height:100%; display:none;"></canvas>
+          </div>
+          <p style="color:var(--primary); font-weight:700; font-size:0.8rem; margin:8px 0 0;">TOCA LOS PUNTOS PARA ESCUCHAR</p>
+        </div>
+      `;
+    } else if (step.cat === "tech") {
+      html += `
+        <div class="card" style="text-align:left;">
+          <div style="font-size:1.1rem; font-weight:900; color:var(--accent); margin-bottom:6px;">TÉCNICA</div>
+          <div>${step.d || ""}</div>
+        </div>
+      `;
+    } else if (step.cat === "rhythm") {
+      html += `
+        <div class="card" style="text-align:center;">
+          <div style="font-size:2rem; color:var(--primary); letter-spacing:6px; font-weight:900;">${step.arr || ""}</div>
+          <div style="font-size:.85rem; color:#ddd; margin-top:6px;">Ritmo recomendado</div>
+        </div>
+      `;
+    }
+
+    // Botón de marcar como completado
+    html += `
+      <div class="card" style="text-align:center;">
+        <button class="btn" onclick="completeDay()" style="background:var(--primary); color:#000; font-weight:900; padding:12px 16px; border-radius:10px; border:none;">
+          Marcar día como completado
+        </button>
+      </div>
+    `;
+
+    content.innerHTML = html;
+
+    // Dibujar acorde si hay
+    if (step.cat === "chord" && step.p) {
+      drawChordCanvas("#chord-canvas", step.p);
+    }
+
+    // Mostrar la vista de acorde grid (opcional para enriquecer UX)
+    // En este MVP mantenemos el canvas para la visualización.
+  }
+
+  // Dibujar diagrama de acordes en un canvas
+  function drawChordCanvas(canvasSelector, positions) {
+    const canvas = document.querySelector(canvasSelector);
+    if (!canvas) return;
+    canvas.style.display = "block";
+
+    const ctx = canvas.getContext("2d");
+    const W = canvas.width;
+    const H = canvas.height;
+
+    // Limpiar
+    ctx.clearRect(0, 0, W, H);
+
+    // Espaciados para una grilla de 5 trastes x 6 cuerdas
+    const marginX = 22;
+    const marginY = 22;
+    const widthAvail = W - marginX * 2;
+    const heightAvail = H - marginY * 2;
+
+    const stepX = widthAvail / 5;   // 6 cuerdas -> 5 espacios entre cuerdas
+    const stepY = heightAvail / 4;  // 5 trastes visibles -> 4 huecos de traste
+
+    // Dibujar cuerdas (6 cuerdas verticales)
+    ctx.strokeStyle = "#555";
+    ctx.lineWidth = 2;
+    for (let i = 0; i < 6; i++) {
+      const x = marginX + i * stepX;
+      ctx.beginPath();
+      ctx.moveTo(x, marginY);
+      ctx.lineTo(x, H - marginY);
+      ctx.stroke();
+    }
+
+    // Dibujar trastes (4 horizontales)
+    ctx.strokeStyle = "#888";
+    for (let j = 0; j < 5; j++) {
+      const y = marginY + j * stepY;
+      ctx.beginPath();
+      ctx.moveTo(marginX - 6, y);
+      ctx.lineTo(W - marginX + 6, y);
+      ctx.stroke();
+    }
+
+    // Dibujar puntos/valores de acorde
+    // positions: array de 6 elementos (string 6 -> string 1)
+    positions.forEach((val, idx) => {
+      const x = marginX + idx * stepX;
+
+      if (val === "X") {
+        // Marca X en el área superior de la cuerda
+        ctx.fillStyle = "#e33";
+        ctx.font = "bold 14px Arial";
+        ctx.fillText("X", x - 4, marginY - 4);
+        return;
+      }
+
+      if (val === 0) {
+        // Open string - círculo en la 1ª posición (nut)
+        const y = marginY; // nut
+        ctx.fillStyle = "var(--primary)";
+        ctx.beginPath();
+        ctx.arc(x, y, 8, 0, Math.PI * 2);
+        ctx.fill();
+        // O
+        ctx.fillStyle = "#000";
+        ctx.font = "12px Arial";
+        ctx.fillText("0", x - 4, y + 4);
+        return;
+      }
+
+      // Acorde fretted
+      if (typeof val === "number") {
+        const fretIndex = Math.max(0, val - 1); // 0-based
+        const y = marginY + fretIndex * stepY;
+        ctx.fillStyle = "var(--primary)";
+        ctx.beginPath();
+        ctx.arc(x, y, 9, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    });
+  }
+
+  // Completar día
+  function completeDay() {
+    // Marca el día actual como completado
+    const progress = getProgress();
+    if (!progress.completed) progress.completed = [];
+    // Si ya marcado, no duplicar
+    if (progress.completed[currentStep]) {
+      alert("Este día ya está marcado como completado.");
+      return;
+    }
+    progress.completed[currentStep] = true;
+    // Persist
+    setProgress(progress);
+    // Actualizar UI
+    render();
+  }
+
+  // Navegación
+  function nextLesson() {
+    if (currentStep < TOTAL_STEPS - 1) {
+      currentStep++;
+      render();
+      saveProgress();
+    }
+  }
+
+  function prevLesson() {
+    if (currentStep > 0) {
+      currentStep--;
+      render();
+      saveProgress();
+    }
+  }
+
+  // Inicialización: intenta un render inicial si ya hay progreso
+  window.addEventListener("load", () => {
+    // Ocultar app hasta login
+    // No autoriza; el usuario debe ingresar código.
+  });
+
+  // Exponemos funciones para el HTML (solo para este MVP)
+  window.login = login;
+  window.nextLesson = nextLesson;
+  window.prevLesson = prevLesson;
+  window.completeDay = completeDay;
+
+</script>
+
+</body>
+</html>
